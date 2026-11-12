@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wer gibt mir die erste Chance?</title>
+<meta name="description" content="Interaktive Reflexion über KI, Praktika und Berufseinstieg.">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#aufgaben">Zu den Aufgaben</a>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">KI · Praktikum · Berufseinstieg</p>
+    <h1>Wer gibt mir die<br>erste Chance?</h1>
+    <p class="intro">Wenn KI Einstiegsaufgaben übernimmt, wo sammeln junge Menschen ihre erste Berufserfahrung?</p>
+    <nav aria-label="Abschnitte">
+      <a href="#einstieg">Einstieg</a><a href="#videos">Videos</a><a href="#quellen">Quellencheck</a><a href="#fall">Fallarbeit</a><a href="#urteil">Dein Urteil</a><a href="#podcast">Podcast</a>
+    </nav>
+  </div>
+</header>
+<main id="aufgaben" class="wrap">
+  <div class="toolbar">
+    <div><strong id="progress">Antworten</strong><p id="storage" role="status">Deine Antworten bleiben in diesem Browser.</p></div>
+    <button type="button" id="export">Antworten exportieren</button>
+  </div>
+  <noscript><p>Für die Eingabefelder, das Speichern und den Export wird JavaScript benötigt. <a href="arbeitsblatt.md">Arbeitsblatt öffnen</a>.</p></noscript>
+  <section id="einstieg">
+    <p class="eyebrow">5 Minuten</p>
+    <h2>Was möchtest du lernen?</h2>
+    <blockquote>Für ein Praktikum brauchst du Erfahrung. Für Erfahrung brauchst du ein Praktikum.</blockquote>
+    <div data-prompts="einstieg"></div>
+  </section>
+  <section id="videos">
+    <p class="eyebrow">25 Minuten</p>
+    <h2>Zwei Ausschnitte, zwei Perspektiven</h2>
+    <p>Schau beide Ausschnitte. Halte mindestens einen Beleg pro Video mit Person und Zeitmarke fest. Der Player beginnt bei 0:00. Addiere seine Zeit zur angegebenen Startzeit, wenn du die Stelle im Original angeben möchtest.</p>
+    <article>
+      <h3>Killt KI unsere Jobs?</h3>
+      <p class="meta">SRF Club · Original 23:20–27:23 · 4:03 Min.</p>
+      <video controls playsinline preload="metadata" src="media/club.mp4" aria-label="SRF Club: ausgewählter Ausschnitt"></video>
+      <p><a href="https://www.srf.ch/play/tv/club/video/killt-ki-unsere-jobs?urn=urn%3Asrf%3Avideo%3A16901035-c807-44ef-8fea-74bad38d62de">Original auf Play SRF öffnen</a></p>
+      <div data-prompts="club"></div>
+    </article>
+    <article>
+      <h3>KI: Muss ich mitmachen bei dem Hype, Fritz Espenlaub?</h3>
+      <p class="meta">SRF Zimmer 42 · Original 33:47–36:31 · 2:44 Min.</p>
+      <video controls playsinline preload="metadata" src="media/zimmer42.mp4" aria-label="SRF Zimmer 42: ausgewählter Ausschnitt"></video>
+      <p><a href="https://www.srf.ch/play/tv/sternstunde-philosophie-zimmer-42---mit-barbara-bleisch/video/ki-muss-ich-mitmachen-bei-dem-hype-fritz-espenlaub?urn=urn%3Asrf%3Avideo%3A45748f10-01b7-4ac9-895a-a00bd32a8eed">Original auf Play SRF öffnen</a></p>
+      <div data-prompts="zimmer"></div>
+    </article>
+  </section>
+  <section id="quellen">
+    <p class="eyebrow">15 Minuten</p>
+    <h2>Gibt es wegen KI weniger Praktika?</h2>
+    <div class="sources">
+      <div><h3>Internationale Arbeitsorganisation</h3><p>Der globale Index untersucht, welche beruflichen Aufgaben generative KI beeinflussen könnte.</p><a href="https://www.ilo.org/publications/generative-ai-and-jobs-refined-global-index-occupational-exposure">ILO-Studie öffnen</a></div>
+      <div><h3>Stanford Digital Economy Lab</h3><p>US-Lohnabrechnungen zeigen ein schwächeres Beschäftigungsmuster bei 22- bis 25-Jährigen in besonders KI-exponierten Berufen.</p><a href="https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/">Stanford-Arbeitspapier öffnen</a></div>
+    </div>
+    <div data-prompts="quellen"></div>
+  </section>
+  <section id="fall">
+    <p class="eyebrow">35 Minuten · Gruppenarbeit und Feedback</p>
+    <h2>Gestaltet ein faires Praktikum</h2>
+    <p>Ein Kulturbetrieb nutzt KI für Texte, Recherche und Standardantworten. Die Leitung erwägt, einen von zwei Praktikumsplätzen zu streichen. Eine Bewerberin möchte Veranstaltungskommunikation lernen. Sie kennt niemanden in der Branche und kann sich einen unbezahlten Einsatz kaum leisten.</p>
+    <p>Verteilt die Rollen Bewerberin, Teamleitung, Betreuungsperson und Schule. Jede Person nennt einen Wunsch und einen Einwand. Entwerft ein zweiwöchiges Praktikum und prüft euren Vorschlag mit einer anderen Gruppe.</p>
+    <div data-prompts="fall"></div>
+  </section>
+  <section id="urteil">
+    <p class="eyebrow">10 Minuten</p>
+    <h2>Dein Urteil</h2>
+    <div data-prompts="urteil"></div>
+  </section>
+  <section id="podcast">
+    <p class="eyebrow">Vertiefung · ARD Sounds</p>
+    <h2>Was tun, wenn KI meinen Job bedroht?</h2>
+    <div id="podcast-player"><button type="button" id="load-podcast" class="secondary">ARD-Player laden</button></div>
+    <p><a href="https://www.ardsounds.de/episode/urn:ard:episode:0d66eb9229384847/">Folge in ARD Sounds öffnen</a> · <a href="https://www.ardsounds.de/sendung/der-ki-podcast/urn:ard:show:65505255c703e51e/">Alle Folgen von «Der KI-Podcast»</a></p>
+    <div data-prompts="podcast"></div>
+  </section>
+  <footer>
+    <button type="button" class="secondary" id="clear">Antworten auf diesem Gerät löschen</button>
+    <p><a href="unterricht.md">Material für Lehrpersonen</a></p>
+  </footer>
+</main>
+</body>
+</html>
