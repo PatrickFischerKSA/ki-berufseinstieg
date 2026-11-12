@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wer gibt mir die erste Chance?</title>
 <meta name="description" content="Interaktive Reflexion über KI, Praktika und Berufseinstieg.">
-<link rel="stylesheet" href="style.css?v=2">
-<script src="app.js?v=3" defer></script>
+<link rel="stylesheet" href="style.css?v=4">
+<script src="app.js?v=4" defer></script>
 </head>
 <body>
 <a class="skip" href="#aufgaben">Zu den Aufgaben</a>
@@ -81,26 +81,30 @@
   </section>
   <section id="wahlmodule">
     <h2>Wahlmodule zur KI-Reflexion</h2>
-    <p>Wähle ein Thema. Plane etwa 15–20 Minuten ein. Besprich deine Entscheidung anschliessend mit einer anderen Person.</p>
+    <p>Wähle ein Thema. Plane etwa 20–25 Minuten ein. Besprich deine Entscheidung anschliessend mit einer anderen Person.</p>
     <nav aria-label="Wahlmodule"><a href="#modul-lernen">KI als Lernhilfe</a><a href="#modul-deepfakes">Deepfakes und Desinformation</a><a href="#modul-fairness">Faire Entscheidungen mit KI</a><a href="#modul-daten">Datenschutz im Schulalltag</a></nav>
     <article id="modul-lernen">
       <h3>KI als Lernhilfe</h3>
       <p>Eine Schülerin soll eine historische Quelle deuten. Der Chatbot liefert in Sekunden eine fertige Interpretation, verwechselt aber Autor und Adressat. Wie könnte sie KI nutzen und dabei selbst lernen, eine Quelle zu lesen?</p>
+      <dl class="case-evidence"><dt>Fiktive Übungsquelle · Brief, 1912</dt><dd>«Sehr geehrte Mitglieder des Gemeinderats, wir Arbeiterinnen bitten um eine sichere Beleuchtung am Fabrikweg.» Unterschrift: «Anna Keller, im Namen der Arbeiterinnen».</dd><dt>Beispiel einer KI-Antwort</dt><dd>«Der Gemeinderat schreibt an die Arbeiterinnen und verspricht, den Fabrikweg zu beleuchten.»</dd></dl>
       <div data-prompts="modul-lernen"></div>
     </article>
     <article id="modul-deepfakes">
       <h3>Deepfakes und Desinformation</h3>
       <p>In eurem Klassenchat taucht ein kurzer Clip auf. Darin kündigt die Schulleiterin scheinbar an, dass die Prüfungen ausfallen. Der Clip hat keinen Quellenlink.</p>
+      <dl class="case-evidence"><dt>Nachricht im Klassenchat</dt><dd>«Prüfungen morgen abgesagt! Schickt das weiter.» Der zwölfsekündige Clip wurde mehrfach weitergeleitet.</dd><dt>Informationsstand</dt><dd>Im offiziellen Schulportal steht weiterhin der Prüfungsplan. Die dortige Meldung wurde gestern aktualisiert. Im Chat fällt jemandem ein leicht versetzter Ton auf.</dd></dl>
       <div data-prompts="modul-deepfakes"></div>
     </article>
     <article id="modul-fairness">
       <h3>Faire Entscheidungen mit KI</h3>
       <p>Eine Schule vergibt Plätze für einen Robotikkurs. Ein Modell empfiehlt vor allem Jugendliche mit früherer Programmiererfahrung. Ein Teil der Klasse hatte zu Hause bisher kaum Zugang zu einem Computer.</p>
+      <p class="case-evidence"><strong>Fiktive Auswahlliste für zwei Plätze</strong><br>Alex: Programmierkurs besucht, möchte ein Projekt vertiefen.<br>Sam: kein Kurs, entwirft zu Hause Roboter auf Papier.<br>Noa: Programmierkurs besucht, bewirbt sich auf Empfehlung.<br>Kim: kein Kurs, erklärt im Team besonders verständlich.</p>
       <div data-prompts="modul-fairness"></div>
     </article>
     <article id="modul-daten">
       <h3>Datenschutz im Schulalltag</h3>
       <p>Eine Gruppe möchte ein Interview über Stress in der Schule von einem Online-Tool zusammenfassen lassen. In der Aufnahme kommen Namen, Stimmen und persönliche Erlebnisse vor.</p>
+      <dl class="case-evidence"><dt>Fiktiver Interviewausschnitt</dt><dd>«Ich bin die einzige Person aus meinem Dorf in der Klasse. Vor mündlichen Prüfungen schlafe ich schlecht.»</dd><dt>Ziel der Gruppe</dt><dd>Sie will wiederkehrende Belastungen zusammenfassen. Die befragte Person hat einem Interview für das Schulprojekt zugestimmt. Eine Weitergabe an ein externes Tool wurde bisher nicht besprochen.</dd></dl>
       <div data-prompts="modul-daten"></div>
     </article>
   </section>

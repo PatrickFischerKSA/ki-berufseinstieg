@@ -43,3 +43,8 @@ footer p{margin-top:1rem}
 .feedback-panel{margin-top:.65rem;padding:.75rem 1rem;background:#e8eddf;border-left:3px solid var(--green)}
 .feedback-panel label{display:flex;align-items:baseline;gap:.55rem;margin:.4rem 0}
 .feedback-panel p:last-child,.feedback-panel ul:last-child{margin-bottom:0}
+.case-evidence{padding:.8rem 1rem;background:#f0f1e8;border-radius:.4rem}
+.case-evidence dt{font-weight:700}
+.case-evidence dd{margin:0 0 .65rem}
+.case-evidence dd:last-child{margin-bottom:0}
+[data-prompts] select{display:block;width:100%;padding:.6rem;border:1px solid #82948a;border-radius:.4rem;background:#fff;color:var(--ink);font:inherit}

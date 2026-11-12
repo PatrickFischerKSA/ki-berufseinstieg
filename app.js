@@ -34,21 +34,144 @@ const sections = {
     ["podcast-notiz", "Wähle eine Stelle. Notiere Zeitmarke und Vorschlag. Wem hilft er konkret und welche Hürde für Jugendliche ohne Praktikumsplatz bleibt bestehen?"]
   ]],
   "modul-lernen": ["Wahlmodul · KI als Lernhilfe", [
+    ["lernen-quelle", "Welche Deutung ist durch den Brief gedeckt?"],
+    ["lernen-prompt", "Welche Frage an den Chatbot hilft dir, selbst weiterzuarbeiten?"],
     ["lernablauf", "Entwirf einen Ablauf mit einem eigenen ersten Versuch, einer gezielten KI-Frage und einer Prüfung am Original."],
     ["lernnachweis", "Wie könnte die Lehrperson erkennen, was du selbst verstanden hast? Entwirf einen kurzen Lernnachweis."]
   ]],
   "modul-deepfakes": ["Wahlmodul · Deepfakes und Desinformation", [
+    ["deepfake-indiz", "Wie gehst du als Erstes vor?"],
+    ["deepfake-update", "Das Sekretariat bestätigt, dass die Prüfungen stattfinden. Was schreibst du?"],
     ["clip-pruefung", "Plane drei Prüfschritte. Welche unabhängige Quelle könnte die Ankündigung bestätigen? Was tust du, solange du keine Bestätigung hast?"],
     ["clip-korrektur", "Du hast den Clip bereits geteilt. Schreibe eine kurze Korrektur für den Klassenchat und erkläre, wie du mit verbleibender Unsicherheit umgehst."]
   ]],
   "modul-fairness": ["Wahlmodul · Faire Entscheidungen mit KI", [
+    ["fairness-regel", "Der Kurs soll Jugendlichen den Einstieg eröffnen. Welche Regel passt zu diesem Ziel?"],
+    ["fairness-auswertung", "Wie prüfst du nach der Vergabe, ob das Verfahren den Zugang verbessert?"],
     ["fairness-kriterium", "Erkläre, weshalb das Auswahlkriterium bestimmte Jugendliche benachteiligen könnte. Welche Fähigkeit oder welches Potenzial soll der Kurs eigentlich fördern?"],
     ["fairness-verfahren", "Entwirf ein Auswahlverfahren mit klaren Kriterien und einer Möglichkeit zur Überprüfung. Wie würdest du erkennen, ob es fairer ist?"]
   ]],
   "modul-daten": ["Wahlmodul · Datenschutz im Schulalltag", [
+    ["daten-minimieren", "Welcher Arbeitsentwurf enthält die für die Zusammenfassung nötige Information?"],
+    ["daten-tool", "Das Tool macht keine klaren Angaben zur Speicherung. Was entscheidet ihr?"],
     ["daten-auswahl", "Welche Informationen braucht ihr für die Zusammenfassung? Welche würdest du vor einer möglichen Weitergabe entfernen und weshalb?"],
     ["daten-entscheidung", "Vergleiche eine manuelle Auswertung mit der Nutzung eines Online-Tools. Welche Fragen zu Zugriff, Speicherung und Einverständnis klärst du vor der Entscheidung?"]
   ]]
+};
+
+const choices = {
+  "lernen-quelle": [
+    [
+      "Die Arbeiterinnen bitten den Gemeinderat um Beleuchtung.",
+      "Diese Deutung stützt sich auf Anrede, Unterschrift und das Verb «bitten». Prüfe als Nächstes, ob der Brief etwas über die spätere Entscheidung verrät."
+    ],
+    [
+      "Der Gemeinderat verspricht den Arbeiterinnen Beleuchtung.",
+      "Die Anrede benennt den Empfänger. Die Unterschrift benennt die Absenderin. Suche im Wortlaut nach einem Versprechen."
+    ],
+    [
+      "Der Fabrikweg wurde 1912 beleuchtet.",
+      "Die Jahreszahl datiert den Brief. Für die Umsetzung bräuchtest du eine weitere Quelle, etwa ein Sitzungsprotokoll."
+    ]
+  ],
+  "lernen-prompt": [
+    [
+      "Gib mir zwei Prüffragen zu Absender und Empfänger.",
+      "Die Fragen können dich auf überprüfbare Merkmale lenken. Beantworte sie mit dem Brief vor dir."
+    ],
+    [
+      "Schreib eine fertige Interpretation.",
+      "Du erhältst schnell einen Text. Um deine Deutung zu üben, formuliere zuerst eine eigene These und bitte um eine Rückfrage dazu."
+    ],
+    [
+      "Bist du sicher, dass deine Antwort stimmt?",
+      "Eine Zusicherung liefert noch keinen Beleg. Bitte um die genaue Textstelle und gleiche sie selbst ab."
+    ]
+  ],
+  "deepfake-indiz": [
+    [
+      "Im offiziellen Schulkanal nachsehen und bei Bedarf das Sekretariat fragen.",
+      "So prüfst du die Behauptung unabhängig vom Clip. Der ältere Prüfungsplan ist ein Anhaltspunkt, bis die Schule den aktuellen Stand bestätigt."
+    ],
+    [
+      "Den Clip weiterleiten und die Klasse um Meinungen bitten.",
+      "Das erhöht die Reichweite der unbestätigten Meldung. Frage gezielt bei einer Stelle nach, die den Prüfungsplan verantwortet."
+    ],
+    [
+      "Den versetzten Ton als Beweis für einen Deepfake werten.",
+      "Tonversatz kann etwa bei der Übertragung entstehen. Prüfe die Aussage über einen offiziellen Kanal, auch wenn die Echtheit des Clips offenbleibt."
+    ]
+  ],
+  "deepfake-update": [
+    [
+      "Das Sekretariat bestätigt den Prüfungsplan. Meine frühere Nachricht war falsch.",
+      "Du korrigierst die konkrete Behauptung und nennst die Quelle. Zur Herstellung des Videos bleibt die Frage offen."
+    ],
+    [
+      "Der Clip ist nachweislich KI-generiert.",
+      "Die Bestätigung widerlegt die Absage. Ob KI eingesetzt wurde, lässt sich daraus nicht bestimmen."
+    ],
+    [
+      "Ich lösche nur meine Nachricht.",
+      "Das begrenzt weitere Zugriffe. Wer die Nachricht bereits gesehen hat, braucht zusätzlich eine kurze Korrektur."
+    ]
+  ],
+  "fairness-regel": [
+    [
+      "Kostenlose Einführungsaufgabe anbieten und die Plätze unter geeigneten Bewerbungen auslosen.",
+      "Alle können sich an derselben Aufgabe versuchen. Prüfe zusätzlich, ob die Aufgabe ohne Vorkenntnisse und mit Schulgeräten lösbar ist."
+    ],
+    [
+      "Die beiden Personen mit Kursbesuch nehmen.",
+      "Damit wählst du Alex und Noa. Für einen Einstiegskurs kann das bisherige Zugangsvorteile verstärken."
+    ],
+    [
+      "Nur das Motivationsschreiben bewerten.",
+      "Das macht Motivation sichtbar, begünstigt aber womöglich Jugendliche mit Schreiberfahrung oder Unterstützung. Prüfe, welche Formate Motivation zeigen dürfen."
+    ]
+  ],
+  "fairness-auswertung": [
+    [
+      "Bewerbungen und Zusagen nach Vorerfahrung vergleichen und Rückmeldungen einholen.",
+      "Die Kombination zeigt, wer sich bewirbt, wer einen Platz erhält und welche Hürden noch bestehen. Bei wenigen Fällen sind die Zahlen vorsichtig zu deuten."
+    ],
+    [
+      "Zählen, ob beide Plätze besetzt sind.",
+      "Das zeigt die Auslastung. Um Zugang zu beurteilen, brauchst du auch Angaben darüber, wer sich beworben hat und wer ausgewählt wurde."
+    ],
+    [
+      "Nur die beiden ausgewählten Personen fragen, ob es fair war.",
+      "Ihre Erfahrung ist relevant. Ergänze Rückmeldungen von Personen ohne Zusage und prüfe, wer sich gar nicht beworben hat."
+    ]
+  ],
+  "daten-minimieren": [
+    [
+      "Eine befragte Person berichtet von Schlafproblemen vor mündlichen Prüfungen.",
+      "Die Belastung bleibt erkennbar. Das Detail zur Herkunft entfällt. Prüfe im Gesamtkontext, ob die Person trotzdem erkennbar wäre."
+    ],
+    [
+      "Die einzige Person aus einem bestimmten Dorf schläft vor Prüfungen schlecht.",
+      "Auch ohne Namen kann das Merkmal in einer kleinen Klasse auf eine Person hinweisen. Für die Zusammenfassung genügt die Belastung."
+    ],
+    [
+      "Ich lade die Tonaufnahme hoch, aber benenne die Datei um.",
+      "Die Aufnahme enthält weiterhin die Stimme und den Inhalt des Interviews. Der Dateiname ändert daran wenig."
+    ]
+  ],
+  "daten-tool": [
+    [
+      "Wir fassen vorerst selbst zusammen und klären mögliche Tools mit der Lehrperson.",
+      "Die Aufgabe geht weiter. Für einen späteren Einsatz könnt ihr Zweck, Zugriff, Aufbewahrung und Einverständnis klären."
+    ],
+    [
+      "Wir laden hoch, weil die Person dem Interview zugestimmt hat.",
+      "Die Zustimmung zum Interview beantwortet die Frage der Weitergabe an ein Tool noch nicht. Klärt den zusätzlichen Verarbeitungsschritt."
+    ],
+    [
+      "Wir nutzen ein privates Browserfenster und laden hoch.",
+      "Der private Modus beeinflusst vor allem Spuren auf dem Gerät. Er klärt nicht, wie der Dienst die Aufnahme verarbeitet."
+    ]
+  ]
 };
 
 const feedback = {
@@ -146,6 +269,25 @@ function addFeedback(container, input) {
   container.append(button, panel);
 }
 
+function addChoiceFeedback(container, input, options) {
+  input.add(new Option("Wähle eine Antwort", ""));
+  for (const [answer] of options) input.add(new Option(answer, answer));
+
+  const result = document.createElement("div");
+  result.className = "feedback-panel";
+  result.id = input.id + "-feedback";
+  result.setAttribute("role", "status");
+  input.setAttribute("aria-describedby", result.id);
+  const refresh = () => {
+    const selected = options.find(([answer]) => answer === input.value);
+    result.textContent = selected?.[1] ?? "";
+    result.hidden = !selected;
+  };
+  input.addEventListener("input", refresh);
+  container.append(result);
+  return refresh;
+}
+
 const storageKey = "ki-berufseinstieg-pages-antworten-v1";
 const status = document.querySelector("#storage");
 const fields = [];
@@ -166,12 +308,19 @@ for (const [key, [heading, prompts]] of Object.entries(sections)) {
     const label = document.createElement("label");
     label.htmlFor = id;
     label.textContent = question;
-    const input = document.createElement("textarea");
+    const options = choices[id];
+    const input = document.createElement(options ? "select" : "textarea");
     input.id = id;
-    input.rows = id === "urteil-text" ? 8 : 3;
-    input.value = typeof saved[id] === "string" ? saved[id] : "";
     container.append(label, input);
-    addFeedback(container, input);
+    if (options) {
+      const refresh = addChoiceFeedback(container, input, options);
+      if (options.some(([answer]) => answer === saved[id])) input.value = saved[id];
+      refresh();
+    } else {
+      input.rows = id === "urteil-text" ? 8 : 3;
+      input.value = typeof saved[id] === "string" ? saved[id] : "";
+      addFeedback(container, input);
+    }
     const required = key !== "podcast" && !key.startsWith("modul-");
     fields.push({ heading, question, input, required });
   }
