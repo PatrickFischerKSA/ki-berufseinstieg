@@ -408,13 +408,103 @@ const openAnswerCriteria = {
   ]
 };
 
+const equivalentPhrases = {
+  lernziel: [[/plakat|flyer|material sammeln|anlass vorbereiten/]],
+  "club-nutzen": [
+    [/mehr raum für (die )?behandlung/, /mehr (aufmerksamkeit|zuwendung) für (die )?krank[en]*/],
+    [/tür bleibt zu|keinen fuss in die tür|keine erste chance|kommt gar nicht erst rein/],
+    [/schon angestellt.{0,120}(noch nie|erste chance|keinen fuss)|wer schon arbeitet.{0,120}wer neu anfangen/]
+  ],
+  "club-bewerbung": [
+    [/lässt (sich )?.{0,25}(anschreiben|bewerbung).{0,25}(machen|aufsetzen)/],
+    [/software.{0,45}(unterlagen|dossiers).{0,35}(sichtet|vorsortiert|aussiebt)/],
+    [/ein mensch.{0,70}(hintergrund|umstände|talent|lücken).{0,45}(würdigen|einordnen|berücksichtigen)/]
+  ],
+  "club-verantwortung": [
+    [/schule.{0,55}(türen öffnen|brücken bauen|mit der praxis zusammenbringen)/],
+    [/arbeitgeber.{0,70}(eine erste chance geben|in die praxis einführen)/],
+    [/später.{0,50}(qualifizierte leute|erfahrene mitarbeitende|eigenen leute)/]
+  ],
+  "zimmer-lernen": [
+    [/wer .{0,45} dauernd abgibt.{0,45}(verlernt|kann es irgendwann nicht mehr)/, /was man kaum (noch )?macht.{0,45}(rostet ein|geht verloren)/],
+    [/eigene gedanken in worte|eine position entwickeln|einen roten faden/]
+  ],
+  "zimmer-vergleich": [
+    [/schneller fertig.{0,70}(selber denken|eigenleistung|verlernen|lernt weniger)/],
+    [/entscheidend.{0,60}(wie man damit umgeht|was man daraus macht).{0,60}(bücher|spiele)/]
+  ],
+  "zimmer-praxis": [
+    [/publikum ansprechen|leser erreichen|gedanken in worte fassen/],
+    [/erst.{0,50}(eigene version|selber schreiben).{0,100}(besprechen|kommentar|versionen gegenüberstellen)/]
+  ],
+  daten: [
+    [/arbeitsorganisation.{0,80}(was sich automatisieren lässt|welche arbeiten betroffen sein könnten)/],
+    [/stanford.{0,80}(wer noch arbeit hat|wer noch angestellt ist|entwicklung der stellen)/],
+    [/sagt nichts darüber.{0,80}(bei uns|vor ort|in der schweiz).{0,60}(angebote|plätze)/]
+  ],
+  ursachen: [[/weniger geld|keine zeit für anleitung|weniger zu tun|weniger aufträge/]],
+  untersuchung: [[], [/angebote.{0,80}(tatsächlich vergeben|jemand angefangen|stellen angetreten)/]],
+  praxisaufgabe: [[], [/(datum|uhrzeit|ort).{0,55}(programm|veranstalter|kalender).{0,30}(nachsehen|abgleichen)/]],
+  betreuung: [[], [/am (montag|dienstag|mittwoch|donnerstag|freitag).{0,90}(besprechen|rückmeldung)/]],
+  zugang: [[], [/geld für den weg|ticket bezahlen|eine pauschale|etwas verdienen/]],
+  "urteil-text": [
+    [/im (ersten|zweiten) (ausschnitt|video).{0,100}(wird deutlich|kommt zur sprache|habe ich verstanden)/],
+    [/einerseits.{0,120}andererseits/, /zwar.{0,100}doch/],
+    [/als nächstes.{0,35}(frage|suche|schreibe|probiere|vereinbare)/],
+    [/(schule|betrieb).{0,50}(in die pflicht|verantwortlich dafür|ich erwarte)/],
+    [/meine meinung.{0,55}(würde kippen|sähe anders aus|hängt davon ab)/]
+  ],
+  lernablauf: [[/ich lese den brief erst einmal|meine vermutung zuerst/], [/ich lasse mir hinweise geben|ich bitte die ki um eine rückfrage/]],
+  lernnachweis: [[/laut erklären|in eigenen worten vortragen|an einem anderen brief zeigen/]],
+  "clip-pruefung": [[/wer hat das zuerst gepostet|woher (stammt|kommt) (das video|der clip)/], [/bei der schule anrufen|die schule direkt kontaktieren/], [/behalte (das|den clip) für mich|warte mit dem teilen/]],
+  "clip-korrektur": [[/morgen ist ganz normal prüfung|die prüfung läuft wie vorgesehen/], [/die schule hat (mir )?geantwortet/], [/wie das video zustande kam.{0,35}(wissen wir noch nicht|bleibt offen)/]],
+  "fairness-kriterium": [[/wer zu hause kein gerät hat.{0,65}(konnte weniger|hatte weniger gelegenheit)/], [/auch anfänger sollen eine chance bekommen|neue leute ans programmieren heranführen/]],
+  "fairness-verfahren": [[/alle bekommen dieselbe chance|aus dem topf ziehen/], [/bei der kursleitung nachfragen|entscheid nochmals anschauen lassen/], [/wer hat sich gemeldet.{0,70}wer wurde aufgenommen/]],
+  "daten-auswahl": [[/vor dem mündlichen termin schlecht schlafen/], [/das dorf verrät.{0,40}wer gemeint ist|die stimme könnte man wiedererkennen/]],
+  "daten-entscheidung": [[/wer die aufnahme sehen kann.{0,80}wie lange sie bleibt/], [/die person fragen.{0,70}ob sie mit der weitergabe einverstanden ist/], [/von hand dauert.{0,75}(dafür|aber)/]]
+};
+
+const corrections = {
+  "club-nutzen": [
+    [0, /\bki ersetzt (alle )?(ärztinnen|ärzte|ärzte und ärztinnen)\b|\bki übernimmt (alle|sämtliche) diagnosen\b/, "Beim Beispiel aus der Medizin geht es um mögliche Entlastung. Beschreibe, wie dadurch mehr Zeit für Patient*innen entstehen könnte."],
+    [2, /erschwerter (berufszugang|einstieg) (ist|bedeutet) (genau )?(dasselbe|eine kündigung)|kein unterschied zwischen/, "Trenne die Situationen. Bei einer Kündigung geht eine bestehende Stelle verloren. Beim erschwerten Einstieg hat die Person noch keine Stelle gefunden."]
+  ],
+  "club-bewerbung": [[1, /nur (die )?bewerbenden (nutzen|verwenden) ki|betriebe (nutzen|verwenden) keine ki/, "Im beschriebenen Ablauf können beide Seiten KI nutzen. Ergänze den Einsatz bei Auswahl oder Absagen im Betrieb."]],
+  "club-verantwortung": [[1, /nur (die )?schule (ist zuständig|trägt verantwortung)|betriebe haben keine verantwortung/, "Ergänze die Rolle des Betriebs. Er kann Einstiegsplätze schaffen und Einsteigende betreuen."]],
+  "zimmer-lernen": [[0, /wenn man.{0,40}(weniger|nie) übt.{0,45}(wird man besser|verbessert sich die fähigkeit)/, "Bleischs Sorge geht in die andere Richtung. Erkläre, welche Fähigkeit durch weniger eigene Übung schwächer werden könnte."]],
+  "zimmer-vergleich": [[0, /espenlaub (sagt|meint|findet).{0,20}ki (schadet|hilft) immer/, "Espenlaub hält beide Wirkungen für möglich. Beschreibe, wie es darauf ankommt, wofür und wie KI eingesetzt wird."]],
+  daten: [
+    [0, /ilo (zählt|misst|erfasst) (tatsächliche )?(entlassungen|kündigungen|jobverluste)/, "Die ILO schätzt, welche Aufgaben von generativer KI betroffen sein könnten. Eine tatsächliche Entlassung ist eine andere Messgrösse."],
+    [2, /stanford (beweist|zeigt).{0,80}(weniger|keine) (schweizer praktika|praktika in der schweiz)|beweist,? dass ki.{0,60}(praktika|praktikumsplätze)/, "Die Stanford-Daten betreffen Beschäftigung in den USA. Für eine Aussage über Schweizer Praktika braucht ihr lokale Praktikumsdaten und einen geeigneten Vergleich."]
+  ],
+  "urteil-text": [[1, /ki (ist )?(allein|ausschliesslich) (schuld|verantwortlich)|ki ersetzt (sicher|garantiert) alle/, "Formuliere die Behauptung so stark, wie dein Beleg sie trägt. Prüfe eine weitere mögliche Ursache und erkläre, was deine Einschätzung ändern könnte."]],
+  lernablauf: [[2, /gemeinderat (schreibt|richtet den brief) an (die )?arbeiterinnen|gemeinderat verspricht.{0,25}beleuchtung/, "Im Übungsbrief schreiben die Arbeiterinnen an den Gemeinderat. Die Anrede zeigt den Empfänger, die Unterschrift die Absenderin. Im Brief steht eine Bitte um Beleuchtung."]],
+  "clip-pruefung": [[1, /tonversatz (beweist|ist (der|ein) beweis)|versetzte[rn]? ton (beweist|ist (der|ein) beweis)/, "Tonversatz kann bei der Übertragung entstehen. Prüfe die Prüfungsabsage über einen offiziellen Schulkanal."]],
+  "clip-korrektur": [[2, /sekretariat.{0,60}(beweist|bestätigt).{0,50}(deepfake|ki-generiert)/, "Das Sekretariat bestätigt im Fall den Prüfungsplan. Wie der Clip hergestellt wurde, bleibt offen."]],
+  "fairness-kriterium": [[0, /ohne (kurs|vorkenntnisse|programmiererfahrung).{0,30}(kein potenzial|ungeeignet)/, "Vorerfahrung hängt auch vom Zugang zu Geräten und Kursen ab. Überlege, wie sich Interesse oder Lernpotenzial für einen Einstiegskurs direkt zeigen lässt."]],
+  "daten-auswahl": [[1, /ohne namen.{0,30}(immer anonym|vollständig anonym|niemand erkennbar)|datei umbenennen.{0,30}(reicht|anonym)/, "Eine Person kann durch ihre Stimme oder ein besonderes Detail erkennbar bleiben. Entferne im Beispiel auch den Hinweis auf das Dorf und prüfe den restlichen Kontext."]],
+  "daten-entscheidung": [[1, /zustimmung zum interview (reicht|erlaubt den upload)|privat(er|es) (modus|browserfenster).{0,35}(verhindert|verhindere).{0,15}(speicher|zugriff)/, "Klärt die Weitergabe an den Dienst ausdrücklich. Ein privates Browserfenster beantwortet die Fragen zur Speicherung beim Anbieter und zum Zugriff nicht."]]
+};
+
+function findCorrections(answer, rules) {
+  const sentences = answer.split(/[.!?;\n]+/);
+  return rules.filter(([, pattern]) => sentences.some(sentence => {
+    const match = sentence.match(pattern);
+    if (!match) return false;
+    const before = sentence.slice(0, match.index);
+    const after = sentence.slice(match.index + match[0].length);
+    return !/\b(nicht|falsch|irrtum|behauptung|angeblich|behauptet|irrtümlich|widerlegt|wäre|ob)\b/.test(before)
+      && !/^\s*(stimmt nicht|ist falsch|wäre falsch|trifft nicht zu)/.test(after);
+  }));
+}
+
 function addOpenAnswerFeedback(container, input, criteria) {
   const details = document.createElement("details");
   details.className = "feedback-panel";
   const summary = document.createElement("summary");
   summary.textContent = "Feedback zu meiner Antwort";
   const note = document.createElement("p");
-  note.textContent = "Die Rückmeldung orientiert sich an Formulierungen in deinem Text. Vergleiche sie mit deiner eigenen Einschätzung.";
+  note.textContent = "Die Rückmeldung erkennt typische Formulierungen und Fehlannahmen. Vergleiche sie mit deiner eigenen Einschätzung.";
   const result = document.createElement("div");
   result.setAttribute("aria-live", "polite");
   details.append(summary, note, result);
@@ -433,7 +523,7 @@ function addOpenAnswerFeedback(container, input, criteria) {
   }
 
   function refresh() {
-    const answer = input.value.trim().toLocaleLowerCase("de-CH");
+    const answer = input.value.normalize("NFKC").trim().toLocaleLowerCase("de-CH").replaceAll("ß", "ss").replace(/\s+/g, " ");
     result.replaceChildren();
     if (!answer) {
       result.textContent = "Schreibe zuerst einen kurzen Entwurf. " + criteria[0][2];
@@ -442,8 +532,14 @@ function addOpenAnswerFeedback(container, input, criteria) {
 
     const strengths = [];
     const gaps = [];
-    for (const [label, patterns, hint] of criteria) {
-      if (patterns.every(pattern => pattern.test(answer))) {
+    const detected = findCorrections(answer, corrections[input.id] ?? []);
+    const disputed = new Set(detected.map(([index]) => index));
+    const equivalents = equivalentPhrases[input.id] ?? [];
+    for (const [index, [label, patterns, hint]] of criteria.entries()) {
+      if (disputed.has(index)) continue;
+      const matches = patterns.every(pattern => pattern.test(answer))
+        || equivalents[index]?.some(pattern => pattern.test(answer));
+      if (matches) {
         strengths.push(label);
       } else {
         gaps.push([label, hint]);
@@ -459,9 +555,10 @@ function addOpenAnswerFeedback(container, input, criteria) {
     showList("Was schon erkennbar ist", strengths.length
       ? strengths
       : ["Dein Entwurf steht. Die Prüfung erkennt bisher keinen eindeutigen Hinweis auf die Kriterien."]);
+    if (detected.length) showList("Diese Aussage solltest du korrigieren", detected.map(([, , hint]) => hint));
     showList("Was du noch prüfen solltest", gaps.length
       ? gaps.map(([label]) => label)
-      : ["Zu allen Kriterien gibt es Anhaltspunkte. Prüfe, ob deine Aussagen auch begründet sind."]);
+      : [detected.length ? "Überarbeite zuerst die markierte Aussage." : "Zu allen Kriterien gibt es Anhaltspunkte. Prüfe, ob deine Aussagen auch begründet sind."]);
     showList("So kannst du deine Antwort verbessern", gaps.length
       ? gaps.map(([, hint]) => hint)
       : ["Wähle deine wichtigste Aussage und ergänze einen Beleg oder ein Beispiel aus dem Fall. Erkläre in einem Satz, warum es deine Aussage stützt."]);
