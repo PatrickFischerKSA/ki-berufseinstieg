@@ -301,7 +301,7 @@ const openAnswerCriteria = {
   "clip-pruefung": [
     ["Herkunft des Clips", [/ursprung|original|erstveröffentlich|absender|wer.*geteilt|quellenlink/], "Suche nach der ersten Veröffentlichung und frage, woher der Clip stammt."],
     ["Unabhängige Bestätigung", [/sekretariat|schulportal|schulleitung|offiziell|prüfungsplan/], "Nenne den offiziellen Schulkanal oder eine zuständige Person, bei der du nachfragst."],
-    ["Handeln bis zur Bestätigung", [/weiterleit|teil|verbreit|wart/, /nicht|kein|erst|bis|bestätig/], "Sag, ob du die Nachricht weiterleitest, und erkläre, was du bis zur Bestätigung tust."]
+    ["Handeln bis zur Bestätigung", [/weiterleit|leit.*weiter|teil|verbreit|wart/, /nicht|kein|erst|bis|bestätig/], "Sag, ob du die Nachricht weiterleitest, und erkläre, was du bis zur Bestätigung tust."]
   ],
   "clip-korrektur": [
     ["Konkrete Korrektur", [/prüf|absag/, /statt|falsch|zurück|gilt|planmässig/], "Schreibe für den Chat klar auf, welche frühere Behauptung du korrigierst."],
