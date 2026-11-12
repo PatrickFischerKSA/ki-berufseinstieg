@@ -288,6 +288,109 @@ function addChoiceFeedback(container, input, options) {
   return refresh;
 }
 
+const openAnswerCriteria = {
+  lernablauf: [
+    ["Eigener erster Versuch", [/selbst|eigen|zuerst/, /deut|these|les|notier/], "Beginne mit deiner eigenen These. Wer bittet hier wen um welche Massnahme?"],
+    ["Gezielte KI-Frage", [/frage|frag|prompt|bitte den/, /chatbot|\bki\b|sprachmodell/], "Schreibe die Frage aus, die du dem Chatbot stellen würdest, etwa nach einem Hinweis zum Absender."],
+    ["Prüfung am Original", [/anrede|unterschrift|wortlaut|textstelle|original/, /prüf|gleich|vergleich|beleg|zeigt/], "Nenne eine konkrete Stelle im Brief und erkläre, welche Behauptung du damit prüfst."]
+  ],
+  lernnachweis: [
+    ["Konkreter Lernnachweis", [/gespräch|mündlich|erklär|aufgabe|demonstrier|präsentier/], "Beschreibe, was die Schülerin in einem kurzen Gespräch oder an einer neuen Textstelle zeigen soll."],
+    ["Nachvollziehbare Begründung", [/begründ|beleg|textstelle|zitat|wortlaut/, /deut|interpret|these|schl[uü]ss|textstelle/], "Lass die Schülerin ihre Deutung an einer Stelle aus dem Brief begründen."]
+  ],
+  "clip-pruefung": [
+    ["Herkunft des Clips", [/ursprung|original|erstveröffentlich|absender|wer.*geteilt|quellenlink/], "Suche nach der ersten Veröffentlichung und frage, woher der Clip stammt."],
+    ["Unabhängige Bestätigung", [/sekretariat|schulportal|schulleitung|offiziell|prüfungsplan/], "Nenne den offiziellen Schulkanal oder eine zuständige Person, bei der du nachfragst."],
+    ["Handeln bis zur Bestätigung", [/weiterleit|teil|verbreit|wart/, /nicht|kein|erst|bis|bestätig/], "Sag, ob du die Nachricht weiterleitest, und erkläre, was du bis zur Bestätigung tust."]
+  ],
+  "clip-korrektur": [
+    ["Konkrete Korrektur", [/prüf|absag/, /statt|falsch|zurück|gilt|planmässig/], "Schreibe für den Chat klar auf, welche frühere Behauptung du korrigierst."],
+    ["Quelle der Korrektur", [/sekretariat|schulportal|schulleitung|offizielle bestätig/], "Nenne die Stelle, die den aktuellen Prüfungsplan bestätigt hat."],
+    ["Verbleibende Unsicherheit", [/unklar|offen|unbekannt|nicht.*(wissen|klar|bestätig|nachweis|beweis)/, /clip|video|deepfake|\bki\b|echt/], "Trenne den bestätigten Prüfungsplan von der offenen Frage, wie der Clip entstanden ist."]
+  ],
+  "fairness-kriterium": [
+    ["Zusammenhang mit ungleichen Chancen", [/zugang|computer|gerät|zuhause|zu hause|ressource/, /erfahrung|vorkennt|programmier|üben|kurs/], "Erkläre, wie fehlender Zugang zu Geräten die Chance beeinflusst, schon vor dem Kurs Programmiererfahrung zu sammeln."],
+    ["Ziel des Kurses", [/einstieg|anfänger|neuling|potenzial|lernchance|interesse|team|vertief|förder/], "Nenne ein konkretes Können, das der Kurs entwickeln soll, und leite daraus ein geeignetes Kriterium ab."]
+  ],
+  "fairness-verfahren": [
+    ["Konkrete Auswahlregel", [/los|aufgabe|kriteri|bewerb|platz|motiv/, /gleich|kostenlos|ohne vorkennt|los|bewert|punkt|regel/], "Erkläre, wie zwei Plätze vergeben werden und welche Voraussetzungen für alle gelten."],
+    ["Möglichkeit zur Überprüfung", [/einspruch|widerspruch|beschwer|überprüf|kontroll/, /lehrperson|leitung|kommission|mensch|team|person/], "Nenne, an wen sich jemand wenden kann, wenn eine Entscheidung unklar ist."],
+    ["Wirkung beobachten", [/vergleich|auswert|rückmeld|befrag|zähl|quote/, /erfahrung|zusag|absag|bewerb|teilnahm/], "Vergleiche Bewerbungen und Zusagen mit und ohne Vorerfahrung. Nenne, woran du eine Verbesserung erkennen würdest."]
+  ],
+  "daten-auswahl": [
+    ["Relevante Aussage erhalten", [/schlaf|belast|stress|angst/, /prüfung|mündlich/], "Formuliere, welche Belastung in der Zusammenfassung stehen soll."],
+    ["Erkennbare Merkmale reduzieren", [/name|stimme|dorf|herkunft|tonaufnahme|persönlich/, /entfern|weglass|anonym|erkenn|identif|streich|nicht weiter/], "Nenne ein Detail, an dem man die Person erkennen könnte, und begründe, weshalb du es weglässt."]
+  ],
+  "daten-entscheidung": [
+    ["Zugriff und Aufbewahrung", [/zugriff|anbieter|dritte|wer.*daten/, /speicher|lösch|aufbewahr/], "Stelle zwei konkrete Fragen: Wer erhält Zugriff, und wann werden die Daten gelöscht?"],
+    ["Einverständnis zur Weitergabe", [/zustimm|einverständ|einwillig|erlaubnis/, /weitergab|upload|hochlad|tool|dienst/], "Erkläre, was ihr mit der befragten Person vor einer Weitergabe an den Dienst klären würdet."],
+    ["Vergleich und begründete Wahl", [/manuell|selbst|von hand|ohne tool/, /aufwand|zeit|nutzen|vorteil|risiko|schnell|weil|sicher/], "Wäge einen konkreten Vorteil des Tools gegen die manuelle Auswertung ab und entscheide für diesen Fall."]
+  ]
+};
+
+function addOpenAnswerFeedback(container, input, criteria) {
+  const details = document.createElement("details");
+  details.className = "feedback-panel";
+  const summary = document.createElement("summary");
+  summary.textContent = "Feedback zu meiner Antwort";
+  const note = document.createElement("p");
+  note.textContent = "Die Rückmeldung orientiert sich an Formulierungen in deinem Text. Vergleiche sie mit deiner eigenen Einschätzung.";
+  const result = document.createElement("div");
+  result.setAttribute("aria-live", "polite");
+  details.append(summary, note, result);
+  container.append(details);
+
+  function showList(title, entries) {
+    const label = document.createElement("strong");
+    label.textContent = title;
+    const list = document.createElement("ul");
+    for (const entry of entries) {
+      const item = document.createElement("li");
+      item.textContent = entry;
+      list.append(item);
+    }
+    result.append(label, list);
+  }
+
+  function refresh() {
+    const answer = input.value.trim().toLocaleLowerCase("de-CH");
+    result.replaceChildren();
+    if (!answer) {
+      result.textContent = "Schreibe zuerst einen kurzen Entwurf. " + criteria[0][2];
+      return;
+    }
+
+    const strengths = [];
+    const gaps = [];
+    for (const [label, patterns, hint] of criteria) {
+      if (patterns.every(pattern => pattern.test(answer))) {
+        strengths.push(label);
+      } else {
+        gaps.push([label, hint]);
+      }
+    }
+
+    showList("Was schon erkennbar ist", strengths.length
+      ? strengths
+      : ["Dein Entwurf steht. Die Prüfung erkennt bisher keinen eindeutigen Hinweis auf die Kriterien."]);
+    showList("Was du noch prüfen solltest", gaps.length
+      ? gaps.map(([label]) => label)
+      : ["Zu allen Kriterien gibt es Anhaltspunkte. Prüfe, ob deine Aussagen auch begründet sind."]);
+    showList("So kannst du deine Antwort verbessern", gaps.length
+      ? gaps.map(([, hint]) => hint)
+      : ["Wähle deine wichtigste Aussage und ergänze einen Beleg oder ein Beispiel aus dem Fall. Erkläre in einem Satz, warum es deine Aussage stützt."]);
+  }
+
+  let timer;
+  details.addEventListener("toggle", () => {
+    if (details.open) refresh();
+  });
+  input.addEventListener("input", () => {
+    window.clearTimeout(timer);
+    if (details.open) timer = window.setTimeout(refresh, 500);
+  });
+}
+
 const storageKey = "ki-berufseinstieg-pages-antworten-v1";
 const status = document.querySelector("#storage");
 const fields = [];
@@ -319,6 +422,8 @@ for (const [key, [heading, prompts]] of Object.entries(sections)) {
     } else {
       input.rows = id === "urteil-text" ? 8 : 3;
       input.value = typeof saved[id] === "string" ? saved[id] : "";
+      const criteria = openAnswerCriteria[id];
+      if (criteria) addOpenAnswerFeedback(container, input, criteria);
       addFeedback(container, input);
     }
     const required = key !== "podcast" && !key.startsWith("modul-");

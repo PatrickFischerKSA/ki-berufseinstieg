@@ -48,3 +48,6 @@ footer p{margin-top:1rem}
 .case-evidence dd{margin:0 0 .65rem}
 .case-evidence dd:last-child{margin-bottom:0}
 [data-prompts] select{display:block;width:100%;padding:.6rem;border:1px solid #82948a;border-radius:.4rem;background:#fff;color:var(--ink);font:inherit}
+
+.feedback-panel summary{cursor:pointer;font-weight:700}
+.feedback-panel summary + p{margin-top:.6rem}
