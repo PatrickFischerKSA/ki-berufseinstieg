@@ -39,3 +39,7 @@ footer p{margin-top:1rem}
 .skip{position:absolute;left:.5rem;top:.5rem;transform:translateY(-200%);background:white;padding:.4rem;z-index:2}
 .skip:focus{transform:none}
 @media(max-width:480px){.toolbar{position:static;align-items:flex-start;flex-direction:column}html{scroll-padding-top:1rem}}
+.feedback-button{margin-top:.55rem;font-size:.9rem}
+.feedback-panel{margin-top:.65rem;padding:.75rem 1rem;background:#e8eddf;border-left:3px solid var(--green)}
+.feedback-panel label{display:flex;align-items:baseline;gap:.55rem;margin:.4rem 0}
+.feedback-panel p:last-child,.feedback-panel ul:last-child{margin-bottom:0}

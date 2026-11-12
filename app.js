@@ -35,6 +35,93 @@ const sections = {
   ]]
 };
 
+const feedback = {
+  lernziel: [["Konkrete Tätigkeit und eigener Lernschritt", "Nenne eine Aufgabe und beschreibe, was du daran selbst üben möchtest."], ["Sinnvolle KI-Hilfe", "Erkläre, an welcher Stelle KI helfen könnte und was du selbst entscheidest."]],
+  "club-nutzen": [["Nutzen in der Medizin", "Höre ab ca. 24:03 im Original. Wer gewinnt durch KI möglicherweise Zeit, und wofür?"], ["Sorge beim Einstieg", "Höre ab ca. 24:23. Beschreibe, welche Tür sich für Berufseinsteigende schliessen könnte."], ["Unterschied erklärt", "Vergleiche zwei Personen: Eine hat bereits einen Arbeitsvertrag, die andere sucht ihre erste Stelle. Was steht für jede auf dem Spiel?"]],
+  "club-bewerbung": [["KI auf beiden Seiten", "Höre ab ca. 24:43. Unterscheide zwischen dem Schreiben der Bewerbung und der Auswahl im Betrieb."], ["Menschlicher Entscheid begründet", "Wähle einen Schritt, etwa die Vorauswahl oder die Absage. Erkläre, was ein Mensch dort zusätzlich berücksichtigen könnte."]],
+  "club-verantwortung": [["Beiträge von Schule und Betrieb", "Höre ab ca. 26:42. Wer kann Kontakte zu Fachpersonen herstellen? Wer kann Einstiegsstellen anbieten?"], ["Langfristiger Nutzen", "Erkläre, wie heutige Einsteiger*innen zu den Fachkräften von morgen werden können."]],
+  "club-beleg": [["Person, Zeitmarke und Aussage", "Notiere, wer was sagt und an welcher Stelle. Kennzeichne, ob sich deine Zeitmarke auf den Ausschnitt oder das Original bezieht."], ["Art und Reichweite des Belegs", "Entscheide, ob die Aussage ein Beispiel, ein Datenbefund, eine Einschätzung oder eine Prognose ist. Was lässt sich daraus ableiten?"]],
+  "zimmer-lernen": [["Fähigkeit und Übung verbunden", "Erkläre an einem Schritt der Hausarbeit, welche Fähigkeit dabei geübt wird und was beim Delegieren wegfallen könnte."]],
+  "zimmer-vergleich": [["Beide Wirkungen berücksichtigt", "Erkläre, wie Zeitgewinn und weniger Übung gleichzeitig möglich sind."], ["Vergleich erklärt", "Zeige anhand der Bücher oder Spiele, warum die Wirkung eines Mediums von seiner Nutzung abhängt."]],
+  "zimmer-praxis": [["Konkreter Übungsschritt", "Nenne einen Schritt, den die Praktikantin selbst übernimmt, und erkläre, welche Fähigkeit sie dabei übt."], ["KI und Betreuung eingeplant", "Beschreibe, wann KI dazukommt und zu welcher Entscheidung die Betreuungsperson Rückmeldung gibt."]],
+  "zimmer-beleg": [["Nachvollziehbarer Beleg", "Nenne Person, Zeitmarke und Aussage. Erkläre, was die Stelle für deine Antwort zeigt."]],
+  daten: [["Messgrössen getrennt", "Unterscheide zwischen geschätzter Betroffenheit von Aufgaben und beobachteter Beschäftigung."], ["Übertragbarkeit begrenzt", "Nenne eine Angabe über Schweizer Praktika, die beide Quellen offenlassen."]],
+  ursachen: [["Weitere Ursache und Prüfung", "Formuliere eine zweite Erklärung und eine Beobachtung, bei der beide Erklärungen unterschiedliche Ergebnisse erwarten lassen."]],
+  untersuchung: [["Vergleich konkret geplant", "Lege Region, Branche und Zeiträume fest. Gib an, wer verlässliche Angaben zu ausgeschriebenen und besetzten Plätzen liefern könnte."]],
+  praxisaufgabe: [["Aufgabe, KI-Hilfe und Prüfung", "Beschreibe ein echtes Arbeitsprodukt, einen möglichen KI-Fehler und die Quelle, mit der ihr ihn entdeckt."]],
+  betreuung: [["Lernziel und Feedback", "Formuliere ein beobachtbares Lernziel und lege fest, wer wann Rückmeldung wozu gibt."]],
+  zugang: [["Zugang ohne Kontakte und Rücklagen", "Prüft, wer die Ausschreibung sieht, wie ausgewählt wird und welche Kosten entstehen."], ["Ersatzangebot eingeordnet", "Erklärt, welche praktische Erfahrung das Angebot der Schule ermöglicht und was im Betrieb zusätzlich gelernt würde."]],
+  feedback: [["Konkrete Überarbeitung", "Haltet Vorteil, Zielkonflikt und eine daraus abgeleitete Änderung am Vorschlag fest."]],
+  "urteil-text": [["Beleg und Abwägung", "Verbinde einen Medienbeleg mit einer Chance und einem Risiko. Begründe, wie du beide gewichtest."], ["Schritt und Forderung", "Nenne, was du selbst tun kannst und was eine Schule oder ein Betrieb konkret tun sollte."], ["Offene Frage", "Gib an, welche neue Information dich zu einem anderen Urteil bringen könnte."]],
+  "podcast-notiz": [["Zeitmarke, Vorschlag und Grenze", "Nenne die Stelle, erkläre den Vorschlag und beschreibe eine Hürde, die für Jugendliche bestehen bleibt."]]
+};
+
+function addFeedback(container, input) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "secondary feedback-button";
+  button.textContent = "Antwort selbst prüfen";
+  button.setAttribute("aria-expanded", "false");
+  const panel = document.createElement("div");
+  panel.id = input.id + "-feedback";
+  panel.className = "feedback-panel";
+  panel.hidden = true;
+  button.setAttribute("aria-controls", panel.id);
+  const instruction = document.createElement("p");
+  instruction.textContent = "Markiere, was du in deinem Text bereits nachvollziehbar erklärt hast.";
+  const list = document.createElement("div");
+  const result = document.createElement("div");
+  result.setAttribute("role", "status");
+  const checks = feedback[input.id].map(([criterion, hint]) => {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    label.append(checkbox, criterion);
+    list.append(label);
+    checkbox.addEventListener("change", refresh);
+    return { checkbox, hint };
+  });
+
+  function refresh() {
+    const hasDraft = Boolean(input.value.trim());
+    list.hidden = !hasDraft;
+    instruction.hidden = !hasDraft;
+    result.replaceChildren();
+    if (!hasDraft) {
+      const start = document.createElement("p");
+      start.textContent = "Schreibe zuerst einen kurzen Entwurf. Einstiegshilfe: " + checks[0].hint;
+      result.append(start);
+      return;
+    }
+    const remaining = checks.filter(({ checkbox }) => !checkbox.checked);
+    const summary = document.createElement("p");
+    summary.textContent = remaining.length
+      ? `${checks.length - remaining.length} von ${checks.length} Kriterien abgedeckt. Hier kannst du weiterarbeiten:`
+      : "Nach deiner Selbsteinschätzung sind alle Kriterien abgedeckt. Prüfe zum Schluss, ob jemand anderes deine Begründung ohne Nachfragen nachvollziehen kann.";
+    result.append(summary);
+    if (!remaining.length) return;
+    const hints = document.createElement("ul");
+    for (const { hint } of remaining) {
+      const item = document.createElement("li");
+      item.textContent = hint;
+      hints.append(item);
+    }
+    result.append(hints);
+  }
+
+  button.addEventListener("click", () => {
+    panel.hidden = !panel.hidden;
+    button.setAttribute("aria-expanded", String(!panel.hidden));
+    if (!panel.hidden) refresh();
+  });
+  input.addEventListener("input", () => {
+    for (const { checkbox } of checks) checkbox.checked = false;
+    if (!panel.hidden) refresh();
+  });
+  panel.append(instruction, list, result);
+  container.append(button, panel);
+}
+
 const storageKey = "ki-berufseinstieg-pages-antworten-v1";
 const status = document.querySelector("#storage");
 const fields = [];
@@ -60,6 +147,7 @@ for (const [key, [heading, prompts]] of Object.entries(sections)) {
     input.rows = id === "urteil-text" ? 8 : 3;
     input.value = typeof saved[id] === "string" ? saved[id] : "";
     container.append(label, input);
+    addFeedback(container, input);
     fields.push({ heading, question, input });
   }
 }
@@ -112,7 +200,10 @@ document.querySelector("#export").addEventListener("click", () => {
 
 document.querySelector("#clear").addEventListener("click", () => {
   if (!window.confirm("Alle Antworten dieser Einheit auf diesem Gerät löschen?")) return;
-  for (const { input } of fields) input.value = "";
+  for (const { input } of fields) {
+    input.value = "";
+    input.dispatchEvent(new Event("input"));
+  }
   try {
     localStorage.removeItem(storageKey);
     status.textContent = "Antworten auf diesem Gerät gelöscht.";
