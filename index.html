@@ -6,7 +6,7 @@
 <title>Wer gibt mir die erste Chance?</title>
 <meta name="description" content="Interaktive Reflexion über KI, Praktika und Berufseinstieg.">
 <link rel="stylesheet" href="style.css?v=2">
-<script src="app.js?v=2" defer></script>
+<script src="app.js?v=3" defer></script>
 </head>
 <body>
 <a class="skip" href="#aufgaben">Zu den Aufgaben</a>
@@ -16,7 +16,7 @@
     <h1>Wer gibt mir die<br>erste Chance?</h1>
     <p class="intro">Wenn KI Einstiegsaufgaben übernimmt, wo sammeln junge Menschen ihre erste Berufserfahrung?</p>
     <nav aria-label="Abschnitte">
-      <a href="#einstieg">Einstieg</a><a href="#videos">Videos</a><a href="#quellen">Quellencheck</a><a href="#fall">Fallarbeit</a><a href="#urteil">Dein Urteil</a><a href="#podcast">Podcast</a>
+      <a href="#einstieg">Einstieg</a><a href="#videos">Videos</a><a href="#quellen">Quellencheck</a><a href="#fall">Fallarbeit</a><a href="#urteil">Dein Urteil</a><a href="#podcast">Podcast</a><a href="#wahlmodule">Wahlmodule</a>
     </nav>
   </div>
 </header>
@@ -78,6 +78,31 @@
     <div id="podcast-player"><button type="button" id="load-podcast" class="secondary">ARD-Player laden</button></div>
     <p><a href="https://www.ardsounds.de/episode/urn:ard:episode:0d66eb9229384847/">Folge in ARD Sounds öffnen</a> · <a href="https://www.ardsounds.de/sendung/der-ki-podcast/urn:ard:show:65505255c703e51e/">Alle Folgen von «Der KI-Podcast»</a></p>
     <div data-prompts="podcast"></div>
+  </section>
+  <section id="wahlmodule">
+    <h2>Wahlmodule zur KI-Reflexion</h2>
+    <p>Wähle ein Thema. Plane etwa 15–20 Minuten ein. Besprich deine Entscheidung anschliessend mit einer anderen Person.</p>
+    <nav aria-label="Wahlmodule"><a href="#modul-lernen">KI als Lernhilfe</a><a href="#modul-deepfakes">Deepfakes und Desinformation</a><a href="#modul-fairness">Faire Entscheidungen mit KI</a><a href="#modul-daten">Datenschutz im Schulalltag</a></nav>
+    <article id="modul-lernen">
+      <h3>KI als Lernhilfe</h3>
+      <p>Eine Schülerin soll eine historische Quelle deuten. Der Chatbot liefert in Sekunden eine fertige Interpretation, verwechselt aber Autor und Adressat. Wie könnte sie KI nutzen und dabei selbst lernen, eine Quelle zu lesen?</p>
+      <div data-prompts="modul-lernen"></div>
+    </article>
+    <article id="modul-deepfakes">
+      <h3>Deepfakes und Desinformation</h3>
+      <p>In eurem Klassenchat taucht ein kurzer Clip auf. Darin kündigt die Schulleiterin scheinbar an, dass die Prüfungen ausfallen. Der Clip hat keinen Quellenlink.</p>
+      <div data-prompts="modul-deepfakes"></div>
+    </article>
+    <article id="modul-fairness">
+      <h3>Faire Entscheidungen mit KI</h3>
+      <p>Eine Schule vergibt Plätze für einen Robotikkurs. Ein Modell empfiehlt vor allem Jugendliche mit früherer Programmiererfahrung. Ein Teil der Klasse hatte zu Hause bisher kaum Zugang zu einem Computer.</p>
+      <div data-prompts="modul-fairness"></div>
+    </article>
+    <article id="modul-daten">
+      <h3>Datenschutz im Schulalltag</h3>
+      <p>Eine Gruppe möchte ein Interview über Stress in der Schule von einem Online-Tool zusammenfassen lassen. In der Aufnahme kommen Namen, Stimmen und persönliche Erlebnisse vor.</p>
+      <div data-prompts="modul-daten"></div>
+    </article>
   </section>
   <footer>
     <button type="button" class="secondary" id="clear">Antworten auf diesem Gerät löschen</button>

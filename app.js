@@ -32,6 +32,22 @@ const sections = {
   ]],
   podcast: ["Podcast · freiwillige Vertiefung", [
     ["podcast-notiz", "Wähle eine Stelle. Notiere Zeitmarke und Vorschlag. Wem hilft er konkret und welche Hürde für Jugendliche ohne Praktikumsplatz bleibt bestehen?"]
+  ]],
+  "modul-lernen": ["Wahlmodul · KI als Lernhilfe", [
+    ["lernablauf", "Entwirf einen Ablauf mit einem eigenen ersten Versuch, einer gezielten KI-Frage und einer Prüfung am Original."],
+    ["lernnachweis", "Wie könnte die Lehrperson erkennen, was du selbst verstanden hast? Entwirf einen kurzen Lernnachweis."]
+  ]],
+  "modul-deepfakes": ["Wahlmodul · Deepfakes und Desinformation", [
+    ["clip-pruefung", "Plane drei Prüfschritte. Welche unabhängige Quelle könnte die Ankündigung bestätigen? Was tust du, solange du keine Bestätigung hast?"],
+    ["clip-korrektur", "Du hast den Clip bereits geteilt. Schreibe eine kurze Korrektur für den Klassenchat und erkläre, wie du mit verbleibender Unsicherheit umgehst."]
+  ]],
+  "modul-fairness": ["Wahlmodul · Faire Entscheidungen mit KI", [
+    ["fairness-kriterium", "Erkläre, weshalb das Auswahlkriterium bestimmte Jugendliche benachteiligen könnte. Welche Fähigkeit oder welches Potenzial soll der Kurs eigentlich fördern?"],
+    ["fairness-verfahren", "Entwirf ein Auswahlverfahren mit klaren Kriterien und einer Möglichkeit zur Überprüfung. Wie würdest du erkennen, ob es fairer ist?"]
+  ]],
+  "modul-daten": ["Wahlmodul · Datenschutz im Schulalltag", [
+    ["daten-auswahl", "Welche Informationen braucht ihr für die Zusammenfassung? Welche würdest du vor einer möglichen Weitergabe entfernen und weshalb?"],
+    ["daten-entscheidung", "Vergleiche eine manuelle Auswertung mit der Nutzung eines Online-Tools. Welche Fragen zu Zugriff, Speicherung und Einverständnis klärst du vor der Entscheidung?"]
   ]]
 };
 
@@ -53,7 +69,15 @@ const feedback = {
   zugang: [["Zugang ohne Kontakte und Rücklagen", "Prüft, wer die Ausschreibung sieht, wie ausgewählt wird und welche Kosten entstehen."], ["Ersatzangebot eingeordnet", "Erklärt, welche praktische Erfahrung das Angebot der Schule ermöglicht und was im Betrieb zusätzlich gelernt würde."]],
   feedback: [["Konkrete Überarbeitung", "Haltet Vorteil, Zielkonflikt und eine daraus abgeleitete Änderung am Vorschlag fest."]],
   "urteil-text": [["Beleg und Abwägung", "Verbinde einen Medienbeleg mit einer Chance und einem Risiko. Begründe, wie du beide gewichtest."], ["Schritt und Forderung", "Nenne, was du selbst tun kannst und was eine Schule oder ein Betrieb konkret tun sollte."], ["Offene Frage", "Gib an, welche neue Information dich zu einem anderen Urteil bringen könnte."]],
-  "podcast-notiz": [["Zeitmarke, Vorschlag und Grenze", "Nenne die Stelle, erkläre den Vorschlag und beschreibe eine Hürde, die für Jugendliche bestehen bleibt."]]
+  "podcast-notiz": [["Zeitmarke, Vorschlag und Grenze", "Nenne die Stelle, erkläre den Vorschlag und beschreibe eine Hürde, die für Jugendliche bestehen bleibt."]],
+  "lernablauf": [["Eigenleistung sichtbar", "Beschreibe, welche Deutung du vor der KI-Nutzung selbst formulierst."], ["Überprüfung konkret", "Nenne eine Stelle oder Angabe im Original, mit der du die KI-Antwort prüfst."]],
+  "lernnachweis": [["Verstehen überprüfbar", "Schlage eine Aufgabe vor, bei der du deine Deutung mit einer neuen Textstelle oder in einem kurzen Gespräch begründest."]],
+  "clip-pruefung": [["Unabhängige Bestätigung", "Suche nach der ursprünglichen Veröffentlichung und prüfe die Behauptung über einen offiziellen Schulkanal."], ["Handeln bei Unsicherheit", "Entscheide, ob du den Clip weiterleitest, und begründe es."]],
+  "clip-korrektur": [["Korrektur und Beleg", "Sag, welche Behauptung du zurücknimmst und worauf sich deine Korrektur stützt. Falls die Prüfung noch läuft, kennzeichne den Stand."]],
+  "fairness-kriterium": [["Mechanismus erklärt", "Verbinde den ungleichen Zugang zu Computern mit den Chancen, früh Programmiererfahrung zu sammeln."], ["Kursziel geklärt", "Überlege, ob der Kurs vorhandenes Können vertiefen oder neuen Zugang eröffnen soll."]],
+  "fairness-verfahren": [["Verfahren nachvollziehbar", "Nenne Kriterien und erkläre, wer eine strittige Entscheidung überprüft."], ["Wirkung messbar", "Beschreibe eine Beobachtung, mit der ihr den Zugang für Jugendliche ohne Vorerfahrung prüfen könnt."]],
+  "daten-auswahl": [["Daten gezielt ausgewählt", "Trenne die inhaltlich nötigen Aussagen von Namen, Stimmen und Details, an denen man Personen erkennen kann."]],
+  "daten-entscheidung": [["Risiko konkret", "Beschreibe, wer bei einem Upload Zugriff bekommen könnte und welche Speicherfragen offen sind."], ["Entscheidung begründet", "Wäge Aufwand und Nutzen ab und nenne eine Bedingung, unter der du das Tool einsetzen würdest."]]
 };
 
 function addFeedback(container, input) {
@@ -148,12 +172,13 @@ for (const [key, [heading, prompts]] of Object.entries(sections)) {
     input.value = typeof saved[id] === "string" ? saved[id] : "";
     container.append(label, input);
     addFeedback(container, input);
-    fields.push({ heading, question, input });
+    const required = key !== "podcast" && !key.startsWith("modul-");
+    fields.push({ heading, question, input, required });
   }
 }
 
 function updateProgress() {
-  const required = fields.filter(({ input }) => input.id !== "podcast-notiz");
+  const required = fields.filter(field => field.required);
   const answered = required.filter(({ input }) => input.value.trim()).length;
   document.querySelector("#progress").textContent = `${answered} von ${required.length} Pflichtfeldern beantwortet`;
 }
