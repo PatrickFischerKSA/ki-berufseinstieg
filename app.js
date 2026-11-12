@@ -289,6 +289,86 @@ function addChoiceFeedback(container, input, options) {
 }
 
 const openAnswerCriteria = {
+  lernziel: [
+    ["Konkrete Praktikumsaufgabe", [/entwurf|text|recherch|termin|kund|gestalt|programmier|plan|organis|prüf|dokument/], "Nenne eine konkrete Aufgabe und beschreibe, was am Ende vorliegen soll."],
+    ["Eigener Lernschritt und KI-Hilfe", [/selbst|eigen|zuerst|allein/, /\bki\b|chatbot|tool|sprachmodell/], "Ergänze, welchen Schritt du selbst übst und wobei KI gezielt helfen könnte."]
+  ],
+  "club-nutzen": [
+    ["Möglicher Nutzen in der Medizin", [/diagnos|medizin|patient|ärzt|arzt/, /zeit|entlast|schneller/], "Höre ab ca. 24:03 im Original. Wer könnte durch KI Zeit gewinnen und wofür?"],
+    ["Erschwerter Einstieg", [/einstieg|berufszugang|erste stell|praktik|junior|bewerb/], "Höre ab ca. 24:23. Erkläre, warum eine Stelle bestehen kann, obwohl der Zugang schwieriger wird."],
+    ["Bestehende Stelle und erste Chance unterschieden", [/verlier|verlust|kündig|bestehend|bereits|entlass/, /erst|einstieg|zugang|such|bewirb/], "Vergleiche zwei Personen. Eine arbeitet bereits im Betrieb, die andere bewirbt sich erstmals. Beschreibe, was jede verlieren könnte."]
+  ],
+  "club-bewerbung": [
+    ["KI auf Bewerbungsseite", [/bewerb|lebenslauf|anschreiben/, /schreib|formulier|entwurf|erstell|generier/], "Höre ab ca. 24:43. Beschreibe, welchen Schritt die Bewerbenden mit KI erledigen."],
+    ["KI auf Betriebsseite", [/betrieb|unternehmen|arbeitgeber|personal|algorithm/, /sortier|filter|auswahl|bewert|absag|prüf/], "Ergänze, wie KI im Betrieb bei der Auswahl oder bei Absagen eingesetzt wird."],
+    ["Menschlicher Entscheid begründet", [/mensch|personal|person|team/, /entscheid|prüf|gespräch|vorauswahl|absag/, /weil|damit|fair|kontext|einzelfall/], "Wähle einen Entscheidungspunkt und nenne einen konkreten Umstand, den ein Mensch dort berücksichtigen kann."]
+  ],
+  "club-verantwortung": [
+    ["Aufgabe der Schule", [/schule|bildung|lehrperson/, /vermittel|vernetz|kontakt|fachperson|vorbereit|begleit/], "Höre ab ca. 26:42. Beschreibe, wie Bildungsinstitutionen Kontakte oder Zugänge zur Praxis ermöglichen können."],
+    ["Aufgabe des Betriebs", [/betrieb|unternehmen|arbeitgeber/, /anbiet|schaff|bereitstell|betreu|ausbild/], "Erkläre, welchen Platz oder welche Betreuung der Betrieb anbieten soll."],
+    ["Langfristiger Nutzen", [/fachkräft|nachwuchs|zukünft|langfrist|wissenstransfer/], "Verbinde die heutige Einstiegsstelle mit dem späteren Bedarf an erfahrenen Fachkräften."]
+  ],
+  "club-beleg": [
+    ["Person und Zeitmarke", [/coppola|bienefeld|lüthi/, /\b\d{1,2}:\d{2}\b/], "Nenne die sprechende Person und die Zeitmarke im Ausschnitt oder im Original."],
+    ["Art und Aussagekraft", [/beispiel|daten|erfahr|einschätz|prognos|beobacht/, /zeigt|stützt|beleg|berichtet|sagt|nennt|beschreib/], "Gib die Aussage in eigenen Worten wieder und erkläre, was ein Beispiel oder eine Prognose hier stützen kann."]
+  ],
+  "zimmer-lernen": [
+    ["Zusammenhang zwischen Übung und Können", [/üb|trainier|praktizier|anwend|gebrauch/, /verlust|verlier|verkümmer|weniger|abbau|erhalt|entwickel/], "Höre ab 33:47. Erkläre in einem Satz, was mit einer Fähigkeit geschehen kann, wenn sie kaum noch eingesetzt wird."],
+    ["Konkrete Fähigkeit bei der Hausarbeit", [/formulier|schreib|argument|denk|begründ|recherch|widerspruch|struktur/], "Wähle einen Schritt der Hausarbeit und benenne die Fähigkeit, die beim Delegieren dieses Schritts weniger geübt wird."]
+  ],
+  "zimmer-vergleich": [
+    ["Zeitgewinn und weniger Übung", [/zeit|entlast|schneller/, /verlust|verlier|weniger|fähigkeit|üb/], "Vergleiche die beiden Wirkungen ab ca. 34:36. Zeige an derselben Aufgabe, wie beides gleichzeitig eintreten kann."],
+    ["Vergleich mit anderen Medien erklärt", [/spiel|buch|büch|lesen/, /nutz|wie|zweck|bewusst|abhäng|unterschied/], "Erkläre, warum Espenlaub Spiele oder Bücher nennt und was die Art der Nutzung für die Wirkung bedeutet."]
+  ],
+  "zimmer-praxis": [
+    ["Konkrete Fähigkeit benannt", [/schreib|formulier|zielgruppe|aufbau|glieder|struktur|auswähl|recherch|ton|sprache/], "Nenne eine Fähigkeit, die beim eigenen Schreiben einer Ankündigung geübt wird."],
+    ["Betreuter Übungsschritt", [/selbst|eigen|zuerst|zunächst/, /feedback|rückmeld|betreu|vergleich|überarbeit|besprech/], "Beschreibe, was die Praktikantin zuerst selbst entwirft und worauf sie anschliessend Rückmeldung bekommt."]
+  ],
+  "zimmer-beleg": [
+    ["Person und Zeitmarke", [/bleisch|espenlaub/, /\b\d{1,2}:\d{2}\b/], "Notiere Name und Zeitmarke. Gib an, ob du im Ausschnitt oder im Original gezählt hast."],
+    ["Aussage und Begründungsart", [/beispiel|vergleich|einschätz|erfahr|prognos|daten/, /sagt|erklär|meint|nennt|zeigt|beleg|stützt/], "Fasse die konkrete Aussage zusammen und begründe, wie du ihre Art einordnest."]
+  ],
+  daten: [
+    ["Messgrösse der ILO", [/\bilo\b|arbeitsorganisation/, /aufgab|tätig|expon|betroffen|potenzial/], "Beschreibe, was die ILO über Aufgaben oder deren mögliche Betroffenheit schätzt."],
+    ["Messgrösse der Stanford-Studie", [/stanford|\busa\b|\bus\b/, /beschäftig|lohn|arbeitnehm|berufseinst/], "Nenne, welche beobachteten Beschäftigungsdaten untersucht werden."],
+    ["Offene Frage für regionale Praktika", [/praktik|einstiegsplätz/, /region|lokal|schweiz|kanton|hier/, /offen|fehl|unklar|nicht|keine|bräucht/], "Nenne eine Zahl, die ihr lokal erheben müsstet, etwa die Anzahl ausgeschriebener und besetzter Praktika."]
+  ],
+  ursachen: [
+    ["Alternative Erklärung", [/konjunktur|budget|kost|nachfrag|aufträg|betreuung|personal|saison|wirtschaft|spar/], "Formuliere eine andere mögliche Ursache und erkläre, warum sie das Praktikumsangebot beeinflussen könnte."],
+    ["Vergleich zur Prüfung", [/vergleich|prüf|untersuch|befrag|erheb|zahlen|daten/, /betrieb|branche|zeit|jahr|region/], "Plane einen Vergleich zwischen Betrieben oder Zeiträumen, bei dem sich die beiden Erklärungen unterscheiden lassen."]
+  ],
+  untersuchung: [
+    ["Region, Branche und Zeitraum", [/region|kanton|gemeinde|zürich|aarau|schweiz|bern|basel|aargau/, /branche|betrieb|pflege|handel|informatik|kultur|gastronom/, /jahr|monat|zeitraum|20\d{2}|semester/], "Lege ein geografisches Gebiet, eine Branche und zwei vergleichbare Zeiträume fest."],
+    ["Ausgeschriebene und besetzte Plätze", [/ausgeschrieb|ausschreib|inserat|angebot|offen/, /besetz|antritt|vertrag|vergeb|zugesag/], "Erkläre, wie ihr offene Angebote und tatsächlich besetzte Plätze getrennt erfassen würdet."]
+  ],
+  praxisaufgabe: [
+    ["Arbeitsprodukt und Aufgabenverteilung", [/selbst|eigen|praktikantin/, /entwurf|ankündig|text|recherch|termin|veranstalt/, /\bki\b|chatbot|tool/], "Nenne ein Arbeitsprodukt und trenne den eigenen Schritt der Praktikantin von der Hilfe durch KI."],
+    ["Konkreter Fehler und Kontrolle", [/fehler|falsch|halluzin|erfind|stimmt nicht/, /prüf|vergleich|abgleich|quelle|programm|nachfrag/], "Nenne einen möglichen Fehler und die konkrete Quelle oder Person, mit der ihr ihn überprüft."]
+  ],
+  betreuung: [
+    ["Beobachtbares Lernziel", [/lern|kann|ziel|fähig/, /schreib|formulier|prüf|erklär|plan|gestalt|recherch|begrün/], "Formuliere, was die Praktikantin nach zwei Wochen konkret zeigen oder selbst erledigen kann."],
+    ["Betreuung, Zeitpunkt und Rückmeldung", [/betreu|mentor|teamleit|fachperson/, /tag|woche|beginn|ende|mitte|nach|vor/, /feedback|rückmeld|besprech/], "Nenne eine betreuende Rolle, einen Termin und den Entwurf oder Schritt, zu dem es Rückmeldung gibt."]
+  ],
+  zugang: [
+    ["Ausschreibung und Auswahl", [/ausschreib|veröffentlich|inserat|portal|schule/, /auswahl|kriteri|gespräch|los|bewerb/], "Erkläre, wo alle Interessierten vom Platz erfahren und nach welchen Kriterien ihr auswählt."],
+    ["Entschädigung", [/entschäd|lohn|bezahlt|vergüt|spes|fahrtkost|kosten/], "Beschreibe, wie ihr Entschädigung oder notwendige Ausgaben regelt."],
+    ["Schulangebot und fehlende Betriebspraxis", [/schule|praxisprojekt|ersatz|simulation|auftrag/, /fehl|grenz|betrieb|alltag|team|kund/], "Nenne ein Angebot der Schule und eine konkrete Erfahrung, die darin schwieriger zu ermöglichen ist."]
+  ],
+  feedback: [
+    ["Vorteil und Zielkonflikt", [/vorteil|nutzen|chance|zugang|gewinn/, /konflikt|nachteil|aufwand|kost|risiko|zeit|aber/], "Nenne einen Vorteil und erkläre, welche Anforderung damit in Spannung steht."],
+    ["Änderung nach Rückmeldung", [/änder|überarbeit|ergänz|pass.*an|künftig|neu|streichen/], "Formuliere, welchen Teil des Vorschlags ihr aufgrund der Rückmeldung konkret ändert."]
+  ],
+  "urteil-text": [
+    ["Konkreter Medienbezug", [/club|coppola|bienefeld|zimmer|bleisch|espenlaub|podcast|srf|\bard\b/, /\b\d{1,2}:\d{2}\b|zeigt|erklär|sagt|berichtet|beispiel|argument|nennt/], "Nenne eine konkrete Aussage aus einem Video oder dem Podcast. Erkläre, wie sie dein Urteil stützt. Eine Zeitmarke macht sie auffindbar."],
+    ["Chance und Risiko gegeneinander abgewogen", [/chance|vorteil|nutzen|entlast|zeitgewinn|hilf|helfen/, /risiko|nachteil|sorge|verlust|erschwer|gefahr|problem/, /aber|jedoch|gleichzeitig|abwäg|überwieg|wichtiger|hingegen|trotz/], "Wäge Chance und Risiko an derselben Situation ab. Sage, welcher Aspekt für dein Urteil mehr Gewicht hat und warum."],
+    ["Eigener nächster Schritt", [/ich (will|werde|möchte|kann|würde|frage|such|prüf|schreib|bewirb)|mein nächst/], "Formuliere einen Schritt, den du selbst bei der Vorbereitung oder Praktikumssuche umsetzen kannst."],
+    ["Konkrete Forderung an Schule oder Betrieb", [/schule|betrieb|unternehmen|arbeitgeber/, /soll|muss|ford|biete|anbiet|schaff|vermittel|betreu/], "Nenne einen Verantwortlichen und eine überprüfbare Massnahme, etwa regelmässiges Feedback oder eine öffentlich ausgeschriebene Einstiegsstelle."],
+    ["Information, die das Urteil ändern könnte", [/daten|zahlen|vergleich|befrag|studie|information|nachweis|beleg/, /ändern|revidier|anders|falls|wenn|abhängig/], "Nenne eine Information, die dir noch fehlt, und beschreibe, bei welchem Ergebnis du dein Urteil ändern würdest."]
+  ],
+  "podcast-notiz": [
+    ["Zeitmarke und Vorschlag", [/\b\d{1,2}:\d{2}\b/, /vorschl|empfehl|soll|kann|idee/], "Notiere die Zeitmarke und gib den Vorschlag in eigenen Worten wieder."],
+    ["Nutzen und offene Hürde", [/hilft|profit|nutzen|chance/, /hürde|fehl|offen|problem|schwierig|kein/], "Erkläre, wem der Vorschlag hilft und welche Hürde bei der Praktikumssuche bestehen bleibt."]
+  ],
   lernablauf: [
     ["Eigener erster Versuch", [/selbst|eigen|zuerst/, /deut|these|les|notier/], "Beginne mit deiner eigenen These. Wer bittet hier wen um welche Massnahme?"],
     ["Gezielte KI-Frage", [/frage|frag|prompt|bitte den/, /chatbot|\bki\b|sprachmodell/], "Schreibe die Frage aus, die du dem Chatbot stellen würdest, etwa nach einem Hinweis zum Absender."],
@@ -370,6 +450,12 @@ function addOpenAnswerFeedback(container, input, criteria) {
       }
     }
 
+    if (input.id === "urteil-text") {
+      const words = answer.split(/\s+/).filter(word => /[\p{L}\p{N}]/u.test(word)).length;
+      const count = document.createElement("p");
+      count.textContent = `${words} Wörter. Richtwert: 120–180 Wörter.`;
+      result.append(count);
+    }
     showList("Was schon erkennbar ist", strengths.length
       ? strengths
       : ["Dein Entwurf steht. Die Prüfung erkennt bisher keinen eindeutigen Hinweis auf die Kriterien."]);
