@@ -16,6 +16,11 @@ const sections = {
     ["zimmer-praxis", "Wenn KI eine Veranstaltungsankündigung entwirft, welche Fähigkeit übt eine Praktikantin womöglich weniger? Wie könnte die Betreuungsperson den KI-Einsatz so gestalten, dass die Praktikantin diese Fähigkeit übt?"],
     ["zimmer-beleg", "Dein Beleg aus «Zimmer 42» mit Person, Zeitmarke und Art der Begründung."]
   ]],
+  muehlhoff: ["SRF Sternstunde Philosophie · Rainer Mühlhoff", [
+    ["muehl-wettlauf", "Warum erscheint demokratische Mitsprache in der von Mühlhoff beschriebenen Wettlauf-Logik als Hindernis? Gib das Argument in eigenen Worten wieder und prüfe eine seiner Voraussetzungen."],
+    ["muehl-macht", "Welche Abhängigkeit kann entstehen, wenn der Staat zentrale Informationssysteme an private Anbieter auslagert? Belege deine Antwort mit einer Zeitmarke."],
+    ["muehl-ganz", "Wenn du die ganze Sendung gesehen hast, vergleiche zwei Aussagen aus verschiedenen Teilen des Gesprächs. Notiere beide Zeitmarken und erkläre, wie die Aussagen zusammenhängen."]
+  ]],
   quellen: ["Quellencheck", [
     ["daten", "Was messen ILO und Stanford? Was bleibt über Praktika in deiner Region offen?"],
     ["ursachen", "Welche andere Ursache als KI könnte das Angebot verringern? Wie würdest du die Erklärungen prüfen?"],
@@ -289,6 +294,18 @@ function addChoiceFeedback(container, input, options) {
 }
 
 const openAnswerCriteria = {
+  "muehl-wettlauf": [
+    ["Wettlauf und Regulierung verbunden", [/wettlauf|konkurrenz|überlegen|vorsprung/, /regulier|mitsprach|demokrati|verlangsam/], "Höre ab 08:16. Erkläre, warum manche Akteure Regulierung als Nachteil im Wettbewerb darstellen."],
+    ["Voraussetzung geprüft", [/voraussetz|annahme|fraglich|ob|weil|beleg/], "Prüfe zum Beispiel, ob schnellere Entwicklung zwangsläufig wichtiger ist als demokratische Kontrolle."]
+  ],
+  "muehl-macht": [
+    ["Abhängigkeit erklärt", [/staat|behörd|verwaltung/, /abhängig|souverän|macht|kontroll|entscheid/, /privat|anbiet|konzern|palantir/], "Höre ab 12:43. Erkläre, was eine Behörde verlieren könnte, wenn ein Anbieter Infrastruktur und Abläufe bestimmt."],
+    ["Zeitmarke vorhanden", [/\b\d{1,2}:\d{2}\b/], "Notiere, wann deine Belegstelle beginnt und ob du die Zeit aus dem Original oder aus dem Ausschnitt verwendest."]
+  ],
+  "muehl-ganz": [
+    ["Zwei Zeitmarken vorhanden", [/\b\d{1,2}:\d{2}\b[\s\S]*\b\d{1,2}:\d{2}\b/], "Gib für jede Aussage eine Zeitmarke aus der vollständigen Sendung an."],
+    ["Zusammenhang der Aussagen", [/zusammen|ergänz|widerspr|beide|hingegen|beispiel|weil/], "Erkläre, ob eine Aussage die andere illustriert, ergänzt oder einschränkt."]
+  ],
   lernziel: [
     ["Konkrete Praktikumsaufgabe", [/entwurf|text|recherch|termin|kund|gestalt|programmier|plan|organis|prüf|dokument/], "Nenne eine konkrete Aufgabe und beschreibe, was am Ende vorliegen soll."],
     ["Eigener Lernschritt und KI-Hilfe", [/selbst|eigen|zuerst|allein/, /\bki\b|chatbot|tool|sprachmodell/], "Ergänze, welchen Schritt du selbst übst und wobei KI gezielt helfen könnte."]
@@ -670,9 +687,9 @@ for (const [key, [heading, prompts]] of Object.entries(sections)) {
       input.value = typeof saved[id] === "string" ? saved[id] : "";
       const criteria = openAnswerCriteria[id];
       if (criteria) addOpenAnswerFeedback(container, input, criteria);
-      addFeedback(container, input);
+      if (feedback[id]) addFeedback(container, input);
     }
-    const required = key !== "podcast" && !key.startsWith("modul-");
+    const required = key !== "podcast" && key !== "muehlhoff" && !key.startsWith("modul-");
     fields.push({ heading, question, input, required });
   }
 }
@@ -752,5 +769,18 @@ for (const video of document.querySelectorAll("video")) {
     const message = document.createElement("p");
     message.textContent = "Der Ausschnitt ist hier nicht verfügbar. Öffne das SRF-Original und springe zur angegebenen Startzeit.";
     video.replaceWith(message);
+  });
+}
+
+
+for (const button of document.querySelectorAll("[data-srf]")) {
+  button.addEventListener("click", () => {
+    const player = document.createElement("iframe");
+    player.className = "srf-player";
+    player.title = button.closest("article").querySelector("h3").textContent;
+    player.src = "https://www.srf.ch/play/embed?urn=" + encodeURIComponent(button.dataset.srf);
+    player.allowFullscreen = true;
+    button.replaceWith(player);
+    player.focus();
   });
 }

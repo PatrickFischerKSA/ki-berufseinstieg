@@ -55,3 +55,8 @@ footer p{margin-top:1rem}
 .answer-quote{color:inherit;padding:.1em .25em;border-radius:.2em;overflow-wrap:anywhere}
 .answer-quote.strength{background:#d5ebbc}
 .answer-quote.correction{background:#ffdfd2}
+
+.video-view{margin:.75rem 0;border:1px solid #82948a;border-radius:.4rem;padding:.65rem}
+.video-view summary{cursor:pointer;font-weight:700}
+.video-view[open] summary{margin-bottom:.65rem}
+.srf-player{display:block;width:100%;height:auto;aspect-ratio:16/9;border:0}
