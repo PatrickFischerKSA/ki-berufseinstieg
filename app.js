@@ -526,6 +526,13 @@ const equivalentPhrases = {
 };
 
 const corrections = {
+  "muehl-ganz-urteil": [[0, /mühlhoff (sagt|meint|behauptet).{0,35}(usa|staaten).{0,25}(bereits faschistisch|schon faschistisch)/, "Mühlhoff unterscheidet demokratische Staaten von einem möglichen Radikalisierungsprozess."]],
+  "muehl-macht": [[0, /staat bleibt völlig unabhängig|anbieter haben keinen einfluss/, "Mühlhoff warnt vor Abhängigkeit, wenn mit der Infrastruktur auch Abläufe und Entscheidungen ausgelagert werden."]],
+  "muehl-mitsprache": [[0, /alle bürger.{0,30}(wählen|stimmen)|jede person hat eine stimme/, "Im beschriebenen Modell erhalten Anteilseigner Einfluss. Stelle diesem Modell demokratische Mitsprache gegenüber."]],
+  "zimmer-ganz-spannung": [[0, /zeitgewinn führt immer zu mehr lernen|wer zeit spart,? lernt automatisch mehr/, "Prüfe, was mit der eigenen Übung passiert, wenn ein Werkzeug die Tätigkeit übernimmt."]],
+  "zimmer-alltag-zeit": [[0, /espenlaub hasst staubsaugen|espenlaub staubsaugt ungern/, "Espenlaub sagt, dass er auch selbst gerne staubsaugt. Er schätzt die frei werdende Zeit."]],
+  "club-ganz-gewinn": [[0, /(alle|jede person) profitieren|gewinne kommen bei allen an/, "Unterscheide, wer Gewinne erhält und wer beim Einstieg benachteiligt sein kann."]],
+  "club-hebel": [[0, /nur (die )?ausbildung (kann|bietet)|nur betriebe können/, "Die Gesprächsrunde nennt zwei Hebel. Ergänze den jeweils anderen und gib ein Beispiel."]],
   "club-nutzen": [
     [0, /\bki ersetzt (alle )?(ärztinnen|ärzte|ärzte und ärztinnen)\b|\bki übernimmt (alle|sämtliche) diagnosen\b/, "Beim Beispiel aus der Medizin geht es um mögliche Entlastung. Beschreibe, wie dadurch mehr Zeit für Patient*innen entstehen könnte."],
     [2, /erschwerter (berufszugang|einstieg) (ist|bedeutet) (genau )?(dasselbe|eine kündigung)|kein unterschied zwischen/, "Trenne die Situationen. Bei einer Kündigung geht eine bestehende Stelle verloren. Beim erschwerten Einstieg hat die Person noch keine Stelle gefunden."]
@@ -548,6 +555,13 @@ const corrections = {
 };
 
 const correctionExamples = {
+  "muehl-ganz-urteil": [["Mühlhoff beschreibt eine demokratische Gegenwart und fragt, wie daraus eine politische Radikalisierung entstehen kann.", "Originalsendung · 22:05–22:32", "#videos"]],
+  "muehl-macht": [["Wenn Behörden auf zentrale Systeme eines privaten Anbieters angewiesen sind, kann sich auch Entscheidungsmacht zum Anbieter verlagern.", "Originalsendung · 12:43–14:01", "#videos"]],
+  "muehl-mitsprache": [["Im Modell wirken Anteilseigner über den Aufsichtsrat auf die Führung ein. In einer Demokratie beruht Mitsprache auf politischen Rechten.", "Originalsendung · 09:22–09:50", "#videos"]],
+  "zimmer-ganz-spannung": [["Ein Werkzeug kann Zeit sparen. Beim vollständigen Delegieren einer Hausarbeit fällt aber ein Teil der Schreibübung weg.", "Originalsendung · 28:52–29:20 und 33:47–34:31", "#videos"]],
+  "zimmer-alltag-zeit": [["Espenlaub staubsaugt gerne und nutzt den Roboter, um Zeit für andere Dinge zu gewinnen.", "Originalsendung · 28:52–29:20", "#videos"]],
+  "club-ganz-gewinn": [["Betriebe können Produktivitätsgewinne investieren. Wer eine erste Stelle sucht, profitiert davon nicht zwingend.", "Originalsendung · 32:20–32:51 und 23:20–27:23", "#videos"]],
+  "club-hebel": [["Veränderungen sind in der Arbeitswelt und in der Ausbildung möglich. Ein Betrieb kann Abläufe ändern, eine Schule kann praktische Übungen anbieten.", "Originalsendung · 07:09–07:18", "#videos"]],
   "club-nutzen": [
     ["KI könnte in der Diagnostik Zeit sparen und dadurch mehr Zeit für Patient*innen schaffen.", "SRF Club, Original ca. 24:03", "#videos"],
     ["Wer eine Stelle verliert, war bereits angestellt. Wer schwerer in den Beruf einsteigt, bekommt womöglich gar keine erste Stelle.", "SRF Club, Original ca. 24:23", "#videos"]
