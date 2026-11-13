@@ -486,16 +486,48 @@ const corrections = {
   "daten-entscheidung": [[1, /zustimmung zum interview (reicht|erlaubt den upload)|privat(er|es) (modus|browserfenster).{0,35}(verhindert|verhindere).{0,15}(speicher|zugriff)/, "Klärt die Weitergabe an den Dienst ausdrücklich. Ein privates Browserfenster beantwortet die Fragen zur Speicherung beim Anbieter und zum Zugriff nicht."]]
 };
 
-function findCorrections(answer, rules) {
-  const sentences = answer.split(/[.!?;\n]+/);
-  return rules.filter(([, pattern]) => sentences.some(sentence => {
-    const match = sentence.match(pattern);
-    if (!match) return false;
-    const before = sentence.slice(0, match.index);
-    const after = sentence.slice(match.index + match[0].length);
-    return !/\b(nicht|falsch|irrtum|behauptung|angeblich|behauptet|irrtümlich|widerlegt|wäre|ob)\b/.test(before)
-      && !/^\s*(stimmt nicht|ist falsch|wäre falsch|trifft nicht zu)/.test(after);
-  }));
+const correctionExamples = {
+  "club-nutzen": [
+    ["KI könnte in der Diagnostik Zeit sparen und dadurch mehr Zeit für Patient*innen schaffen.", "SRF Club, Original ca. 24:03", "#videos"],
+    ["Wer eine Stelle verliert, war bereits angestellt. Wer schwerer in den Beruf einsteigt, bekommt womöglich gar keine erste Stelle.", "SRF Club, Original ca. 24:23", "#videos"]
+  ],
+  "club-bewerbung": [["Bewerbende können mit KI ihr Anschreiben verfassen. Ein Betrieb kann KI nutzen, um Bewerbungen zu sichten oder Absagen zu erstellen.", "SRF Club, Original ca. 24:43", "#videos"]],
+  "club-verantwortung": [["Bildungsinstitutionen können Zugänge zur Praxis vermitteln. Betriebe können Einstiegsstellen anbieten und Nachwuchs ausbilden.", "SRF Club, Original ca. 26:42", "#videos"]],
+  "zimmer-lernen": [["Wer eine Hausarbeit regelmässig von KI schreiben lässt, übt seltener, eigene Argumente zu formulieren.", "SRF Zimmer 42, Original ab 33:47", "#videos"]],
+  "zimmer-vergleich": [["KI kann Zeit sparen. Wenn sie das Schreiben vollständig übernimmt, bleibt zugleich weniger eigene Übung. Die Wirkung hängt vom Einsatz ab.", "SRF Zimmer 42, Original ab ca. 34:36", "#videos"]],
+  daten: [
+    ["Die ILO schätzt, welche beruflichen Aufgaben generative KI beeinflussen könnte.", "Quellencheck, ILO-Studie zur Betroffenheit von Aufgaben", "#quellen"],
+    ["Die Stanford-Studie untersucht US-Beschäftigungsdaten. Für meine Region brauche ich Angaben zu ausgeschriebenen und besetzten Praktikumsplätzen.", "Quellencheck, Stanford-Arbeitspapier und lokale Untersuchung", "#quellen"]
+  ],
+  "urteil-text": [["KI könnte den Einstieg erschweren, wie Coppolas Beispiel nahelegt. Ob sie in unserer Region das Praktikumsangebot verändert, würde ich anhand lokaler Zahlen und weiterer Ursachen prüfen.", "SRF Club, Original ca. 24:23, und Quellencheck", "#quellen"]],
+  lernablauf: [["Die Arbeiterinnen bitten den Gemeinderat um eine Beleuchtung des Fabrikwegs. Die Anrede nennt den Empfänger, die Unterschrift nennt die Absenderin.", "Übungsbrief von 1912, Anrede und Unterschrift", "#modul-lernen"]],
+  "clip-pruefung": [["Der versetzte Ton ist ein Hinweis. Ich prüfe die angebliche Absage im Schulportal oder frage beim Sekretariat nach.", "Fallmaterial, Nachricht und Informationsstand", "#modul-deepfakes"]],
+  "clip-korrektur": [["Das Sekretariat bestätigt, dass die Prüfungen stattfinden. Wie der Clip entstanden ist, bleibt offen.", "Aufgabe zur Korrektur im Klassenchat", "#modul-deepfakes"]],
+  "fairness-kriterium": [["Wer noch keinen Programmierkurs besucht hat, hatte vielleicht weniger Zugang zu Geräten. Eine gemeinsame Einstiegsaufgabe könnte zeigen, wie die Person an ein Problem herangeht.", "Fiktive Auswahlliste, Sam und Kim", "#modul-fairness"]],
+  "daten-auswahl": [["Eine befragte Person berichtet von Schlafproblemen vor mündlichen Prüfungen. Die Angabe zur Herkunft lasse ich weg, weil sie die Person erkennbar machen kann.", "Fiktiver Interviewausschnitt", "#modul-daten"]],
+  "daten-entscheidung": [["Wir werten das Interview vorerst selbst aus. Vor einem Upload klären wir mit der befragten Person die Weitergabe sowie mit dem Anbieter Zugriff und Aufbewahrung.", "Fallmaterial, Ziel der Gruppe und bisheriges Einverständnis", "#modul-daten"]]
+};
+
+function normalizeAnswer(value) {
+  return value.normalize("NFKC").trim().toLocaleLowerCase("de-CH")
+    .replaceAll("ß", "ss").replace(/\s+/g, " ");
+}
+
+function findCorrections(sentences, task) {
+  const rules = corrections[task] ?? [];
+  return rules.flatMap(([index, pattern, hint], ruleIndex) => {
+    const evidence = sentences.find(({ normalized }) => {
+      const match = normalized.match(pattern);
+      if (!match) return false;
+      const before = normalized.slice(0, match.index);
+      const after = normalized.slice(match.index + match[0].length);
+      return !/\b(nicht|falsch|irrtum|behauptung|angeblich|behauptet|irrtümlich|widerlegt|wäre|ob)\b/.test(before)
+        && !/^\s*(stimmt nicht|ist falsch|wäre falsch|trifft nicht zu)/.test(after);
+    });
+    return evidence
+      ? [{ index, quote: evidence.original, hint, example: correctionExamples[task][ruleIndex] }]
+      : [];
+  });
 }
 
 function addOpenAnswerFeedback(container, input, criteria) {
@@ -516,14 +548,24 @@ function addOpenAnswerFeedback(container, input, criteria) {
     const list = document.createElement("ul");
     for (const entry of entries) {
       const item = document.createElement("li");
-      item.textContent = entry;
+      item.append(entry);
       list.append(item);
     }
     result.append(label, list);
   }
 
+  function markQuote(quote, kind) {
+    const mark = document.createElement("mark");
+    mark.className = "answer-quote " + kind;
+    mark.textContent = "«" + quote + "»";
+    return mark;
+  }
+
   function refresh() {
-    const answer = input.value.normalize("NFKC").trim().toLocaleLowerCase("de-CH").replaceAll("ß", "ss").replace(/\s+/g, " ");
+    const answer = normalizeAnswer(input.value);
+    const sentences = input.value.split(/(?<=[.!?])\s+|\n+/)
+      .map(original => original.trim()).filter(Boolean)
+      .map(original => ({ original, normalized: normalizeAnswer(original) }));
     result.replaceChildren();
     if (!answer) {
       result.textContent = "Schreibe zuerst einen kurzen Entwurf. " + criteria[0][2];
@@ -532,15 +574,21 @@ function addOpenAnswerFeedback(container, input, criteria) {
 
     const strengths = [];
     const gaps = [];
-    const detected = findCorrections(answer, corrections[input.id] ?? []);
-    const disputed = new Set(detected.map(([index]) => index));
+    const detected = findCorrections(sentences, input.id);
+    const disputed = new Set(detected.map(({ index }) => index));
     const equivalents = equivalentPhrases[input.id] ?? [];
     for (const [index, [label, patterns, hint]] of criteria.entries()) {
       if (disputed.has(index)) continue;
-      const matches = patterns.every(pattern => pattern.test(answer))
-        || equivalents[index]?.some(pattern => pattern.test(answer));
-      if (matches) {
-        strengths.push(label);
+      const paraphrase = sentences.find(({ normalized }) =>
+        equivalents[index]?.some(pattern => pattern.test(normalized)));
+      const matches = patterns.map(pattern =>
+        sentences.find(({ normalized }) => pattern.test(normalized)));
+      if (paraphrase || matches.every(Boolean)) {
+        const excerpts = paraphrase ? [paraphrase] : [...new Set(matches)];
+        const item = document.createElement("span");
+        item.append(label);
+        for (const { original } of excerpts) item.append(" ", markQuote(original, "strength"));
+        strengths.push(item);
       } else {
         gaps.push([label, hint]);
       }
@@ -555,7 +603,22 @@ function addOpenAnswerFeedback(container, input, criteria) {
     showList("Was schon erkennbar ist", strengths.length
       ? strengths
       : ["Dein Entwurf steht. Die Prüfung erkennt bisher keinen eindeutigen Hinweis auf die Kriterien."]);
-    if (detected.length) showList("Diese Aussage solltest du korrigieren", detected.map(([, , hint]) => hint));
+    if (detected.length) {
+      const items = detected.map(({ quote, hint, example }) => {
+        const [suggestion, source, href] = example;
+        const item = document.createElement("div");
+        const explanation = document.createElement("p");
+        explanation.textContent = hint;
+        const revision = document.createElement("p");
+        revision.textContent = "So könntest du es formulieren. «" + suggestion + "»";
+        const link = document.createElement("a");
+        link.href = href;
+        link.textContent = source;
+        item.append(markQuote(quote, "correction"), explanation, revision, link);
+        return item;
+      });
+      showList("Diese Aussage solltest du korrigieren", items);
+    }
     showList("Was du noch prüfen solltest", gaps.length
       ? gaps.map(([label]) => label)
       : [detected.length ? "Überarbeite zuerst die markierte Aussage." : "Zu allen Kriterien gibt es Anhaltspunkte. Prüfe, ob deine Aussagen auch begründet sind."]);
