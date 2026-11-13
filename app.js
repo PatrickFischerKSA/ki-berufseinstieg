@@ -18,9 +18,20 @@ const sections = {
   ]],
   muehlhoff: ["SRF Sternstunde Philosophie · Rainer Mühlhoff", [
     ["muehl-wettlauf", "Warum erscheint demokratische Mitsprache in der von Mühlhoff beschriebenen Wettlauf-Logik als Hindernis? Gib das Argument in eigenen Worten wieder und prüfe eine seiner Voraussetzungen."],
+  ]],
+  "muehl-macht": ["Mühlhoff · Staat und Technologiekonzerne", [
     ["muehl-macht", "Welche Abhängigkeit kann entstehen, wenn der Staat zentrale Informationssysteme an private Anbieter auslagert? Belege deine Antwort mit einer Zeitmarke."],
+  ]],
+  "muehl-full-existing": ["Mühlhoff · Ganze Sendung", [
     ["muehl-ganz", "Wenn du die ganze Sendung gesehen hast, vergleiche zwei Aussagen aus verschiedenen Teilen des Gesprächs. Notiere beide Zeitmarken und erkläre, wie die Aussagen zusammenhängen."]
   ]],
+  "club-thema": ["Club · Arbeit und Ausbildung", [["club-hebel", "Welche zwei Handlungsspielräume nennt der Ausschnitt? Gib für beide ein Beispiel aus deiner Umgebung."], ["club-qualitaet", "Was könnte an einer Aufgabe wertvoll sein, auch wenn KI sie schneller erledigt? Begründe es an einem Praktikumsbeispiel."]]],
+  "club-ganz": ["Club · Ganze Sendung", [["club-ganz-gewinn", "Vergleiche die Chancen durch Produktivitätsgewinne mit der Sorge um den Berufseinstieg. Wer könnte jeweils profitieren oder benachteiligt werden? Belege beide Perspektiven."], ["club-ganz-urteil", "Welche Massnahme würdest du nach der ganzen Sendung zuerst erproben? Begründe deine Wahl und nenne einen Einwand aus einer anderen Passage."]]],
+  "zimmer-thema": ["Zimmer 42 · Automatisierung im Alltag", [["zimmer-alltag-zeit", "Warum gefällt Espenlaub der Staubsaugerroboter, obwohl er auch selbst gerne staubsaugt? Übertrage seine Begründung auf eine Aufgabe mit KI."], ["zimmer-alltag-grenze", "Welche Alltagstätigkeit würdest du selbst behalten? Vergleiche deinen Grund mit der Skepsis, die Espenlaub seiner Grossmutter zuschreibt."]]],
+  "zimmer-ganz": ["Zimmer 42 · Ganze Sendung", [["zimmer-ganz-spannung", "Vergleiche Espenlaubs Alltagsbeispiel mit Bleischs Sorge um Fähigkeiten. Wann wird Entlastung für dich zum Verlust einer Lernchance?"], ["zimmer-ganz-regel", "Welche persönliche Regel zur KI-Nutzung leitest du aus dem Gespräch ab? Verbinde den Gedanken der Selbstwirksamkeit mit einem zweiten Moment der Sendung."]]],
+  "muehl-thema": ["Mühlhoff · Staat und Technologiekonzerne", [["muehl-kontrolle", "Entwirf eine Regel, mit der eine Behörde bei externer Software die Kontrolle über Entscheidungen behält. Begründe sie mit Mühlhoffs These."]]],
+  "muehl-ganz-vertiefung": ["Mühlhoff · Ganze Sendung", [["muehl-ganz-urteil", "Wie unterscheidet Mühlhoff eine demokratische Gegenwart von einer möglichen politischen Radikalisierung? Verbinde die Unterscheidung mit seiner These zum Einfluss privater Unternehmen."]]],
+  "muehl-wettlauf-vertiefung": ["Mühlhoff · KI-Wettlauf und Demokratie", [["muehl-mitsprache", "Wer hätte im beschriebenen Modell einer CEO-Monarchie Einfluss auf die Führung? Vergleiche das mit demokratischer Mitsprache."]]],
   quellen: ["Quellencheck", [
     ["daten", "Was messen ILO und Stanford? Was bleibt über Praktika in deiner Region offen?"],
     ["ursachen", "Welche andere Ursache als KI könnte das Angebot verringern? Wie würdest du die Erklärungen prüfen?"],
@@ -294,6 +305,39 @@ function addChoiceFeedback(container, input, options) {
 }
 
 const openAnswerCriteria = {
+  "muehl-mitsprache": [
+    ["Entscheidungsmacht verglichen", [/aktionär|anteil|shareholder|aufsichtsrat|investor/, /wahl|bürger|mitsprach|stimmrecht|demokrati/], "Nenne, wer im Modell Einfluss hat, und vergleiche, worauf politisches Stimmrecht in einer Demokratie beruht."]
+  ],
+  "muehl-ganz-urteil": [
+    ["Gegenwart und mögliche Entwicklung unterschieden", [/demokrati|rechtsstaat/, /radikalis|entwicklung|prozess|machttransfer|abhängig/], "Erkläre, weshalb ein Machttransfer ein Risiko für die Demokratie sein kann, und belege, wie Mühlhoff den gegenwärtigen Zustand beschreibt."]
+  ],
+  "muehl-kontrolle": [
+    ["Kontrollregel begründet", [/behörd|staat|verwaltung/, /prüf|einspruch|offenleg|audit|entscheid|wechsel/], "Nenne eine Entscheidung, für die die Behörde verantwortlich bleiben soll. Beschreibe, wer sie prüfen oder anfechten kann."]
+  ],
+  "zimmer-ganz-regel": [
+    ["Regel mit Selbstwirksamkeit verbunden", [/selbstwirksam|einfluss|gestalt|entscheide|kontroll/, /regel|wenn|erst|nur|werde/], "Schreibe deine Regel als Wenn-dann-Satz und zeige anhand zweier Stellen, welchen Entscheidungsspielraum du behalten möchtest."]
+  ],
+  "zimmer-ganz-spannung": [
+    ["Entlastung und Übung abgewogen", [/zeit|entlast|roboter/, /lern|üb|fähig|selber/], "Beschreibe für dieselbe Tätigkeit einen sinnvollen Einsatz und einen Einsatz, bei dem die eigene Übung wegfällt."]
+  ],
+  "zimmer-alltag-grenze": [
+    ["Eigene Grenze und Perspektive verglichen", [/grossmutter|oma|skepsis/, /selbst|eigen|weil|gerne/], "Nenne eine Tätigkeit und erkläre, ob dir dabei Können, Freude oder Verantwortung wichtig ist. Setze deinen Grund zur Haltung der Grossmutter in Beziehung."]
+  ],
+  "zimmer-alltag-zeit": [
+    ["Zeitgewinn auf eine Aufgabe übertragen", [/zeit|entlast|schneller/, /staubsaug|roboter|alltag/], "Erkläre zuerst, wofür die frei werdende Zeit wertvoll ist, und benenne dann einen vergleichbaren Arbeitsschritt mit KI."]
+  ],
+  "club-ganz-urteil": [
+    ["Massnahme und Einwand verbunden", [/betrieb|schule|ausbild|praktik|einstieg/, /einwand|aber|jedoch|risiko|aufwand/], "Formuliere eine konkrete Massnahme, belege den Einwand mit einer zweiten Stelle und erläutere, wie du ihm begegnen würdest."]
+  ],
+  "club-ganz-gewinn": [
+    ["Verteilung und Einstieg verglichen", [/produktivit|gewinn|einkommen|investier/, /einstieg|bewerb|erste stell|praktik/], "Zeige, wie ein Betrieb einen Gewinn nutzen könnte, und erkläre, warum eine Person auf Stellensuche davon nicht zwingend profitiert."]
+  ],
+  "club-qualitaet": [
+    ["Wert der Aufgabe erklärt", [/lern|qualit|feedback|erfahr|kontakt/, /weil|damit|dadurch|beispiel/], "Beschreibe einen konkreten Arbeitsablauf und erkläre, was die Person dabei lernt oder für andere verbessert."]
+  ],
+  "club-hebel": [
+    ["Arbeit und Ausbildung unterschieden", [/betrieb|arbeit/, /ausbild|schule|lehre/], "Nenne für den Betrieb eine veränderbare Aufgabe und für die Ausbildung eine Gelegenheit zum Üben."]
+  ],
   "muehl-wettlauf": [
     ["Wettlauf und Regulierung verbunden", [/wettlauf|konkurrenz|überlegen|vorsprung/, /regulier|mitsprach|demokrati|verlangsam/], "Höre ab 08:16. Erkläre, warum manche Akteure Regulierung als Nachteil im Wettbewerb darstellen."],
     ["Voraussetzung geprüft", [/voraussetz|annahme|fraglich|ob|weil|beleg/], "Prüfe zum Beispiel, ob schnellere Entwicklung zwangsläufig wichtiger ist als demokratische Kontrolle."]
@@ -547,6 +591,31 @@ function findCorrections(sentences, task) {
   });
 }
 
+const videoReferences = {
+  "club-nutzen": "23:20–24:28 · Medizin und Berufszugang",
+  "club-bewerbung": "24:40–25:00 · KI beim Bewerben und Auswählen",
+  "club-verantwortung": "26:42–27:17 · Verantwortung und Nachwuchs",
+  "club-beleg": "23:20–27:23 · Aussagen zum Berufseinstieg",
+  "club-hebel": "07:09–07:18 · Arbeitswelt und Ausbildung",
+  "club-qualitaet": "07:19–07:40 · Wert der Arbeit und Produktivität",
+  "club-ganz-gewinn": "23:20–27:23 · Berufseinstieg | 32:20–32:51 · Produktivitätsgewinne und ihre Verteilung",
+  "club-ganz-urteil": "23:20–27:23 · Berufseinstieg | 32:20–32:51 · Produktivitätsgewinne und ihre Verteilung",
+  "zimmer-lernen": "33:47–34:31 · Übung und Hausarbeit",
+  "zimmer-vergleich": "34:36–36:31 · Zeitgewinn, Verlust und Nutzung",
+  "zimmer-praxis": "33:47–36:31 · Eigene Übung und bewusster KI-Einsatz",
+  "zimmer-beleg": "33:47–36:31 · Eigene Übung und bewusster KI-Einsatz",
+  "zimmer-alltag-zeit": "28:52–29:20 · Zeitersparnis durch Automatisierung",
+  "zimmer-alltag-grenze": "28:27–28:52 · Skepsis der Grossmutter",
+  "zimmer-ganz-spannung": "28:52–29:20 · Entlastung | 33:47–34:31 · Weniger eigene Übung",
+  "zimmer-ganz-regel": "33:47–36:31 · Bewusste Nutzung | 40:41–41:18 · Selbstwirksamkeit",
+  "muehl-wettlauf": "08:16–09:22 · Konkurrenz und Regulierung",
+  "muehl-mitsprache": "09:22–09:50 · Aufsichtsrat und Anteilseigner",
+  "muehl-macht": "12:43–14:01 · Informationssysteme und Machttransfer",
+  "muehl-kontrolle": "12:43–14:01 · Informationssysteme und Machttransfer",
+  "muehl-ganz": "12:43–14:01 · Machttransfer | 22:05–22:32 · Radikalisierung und Demokratie",
+  "muehl-ganz-urteil": "12:43–14:01 · Machttransfer | 22:05–22:32 · Radikalisierung und Demokratie"
+};
+
 function addOpenAnswerFeedback(container, input, criteria) {
   const details = document.createElement("details");
   details.className = "feedback-panel";
@@ -584,8 +653,16 @@ function addOpenAnswerFeedback(container, input, criteria) {
       .map(original => original.trim()).filter(Boolean)
       .map(original => ({ original, normalized: normalizeAnswer(original) }));
     result.replaceChildren();
+    const reference = videoReferences[input.id];
+    if (reference) {
+      const material = document.createElement("p");
+      material.textContent = "Zum Nachschauen in der Originalsendung · " + reference;
+      result.append(material);
+    }
     if (!answer) {
-      result.textContent = "Schreibe zuerst einen kurzen Entwurf. " + criteria[0][2];
+      const start = document.createElement("p");
+      start.textContent = "Schreibe zuerst einen kurzen Entwurf. " + criteria[0][2];
+      result.append(start);
       return;
     }
 
@@ -689,7 +766,7 @@ for (const [key, [heading, prompts]] of Object.entries(sections)) {
       if (criteria) addOpenAnswerFeedback(container, input, criteria);
       if (feedback[id]) addFeedback(container, input);
     }
-    const required = key !== "podcast" && key !== "muehlhoff" && !key.startsWith("modul-");
+    const required = ["einstieg", "club", "zimmer", "quellen", "fall", "urteil"].includes(key);
     fields.push({ heading, question, input, required });
   }
 }
