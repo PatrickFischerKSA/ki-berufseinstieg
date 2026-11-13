@@ -79,3 +79,12 @@ footer p{margin-top:1rem}
   .hero-layout{grid-template-columns:minmax(0,1fr)}
   .hero h1{text-wrap:initial}
 }
+
+[hidden]{display:none!important}
+.chapter-open .hero{padding:.4rem 0}
+.chapter-open .hero nav{border-top:0;margin:.3rem 0;padding:.25rem 0}
+.hero nav [aria-current="page"]{color:var(--green);background:var(--accent);text-decoration:none;border-radius:.25rem}
+.hero nav a{padding:.2rem .4rem}
+.chapter-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:.75rem}
+.chapter-links a{padding:.75rem 1rem;background:#e8eddf;border:1px solid var(--border);border-radius:.4rem;font-weight:700}
+.chapter-back{font-size:.9rem}

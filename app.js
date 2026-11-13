@@ -875,3 +875,58 @@ for (const button of document.querySelectorAll("[data-srf]")) {
     player.focus();
   });
 }
+
+const chapterSections = [...document.querySelectorAll("main > section")];
+const chapterArticles = [...document.querySelectorAll("#videos > article, #wahlmodule > article")];
+const cover = document.querySelector("#start");
+const chapterNav = document.querySelector(".hero nav");
+const chapterRoutes = new Map([cover, ...chapterSections, ...chapterArticles]
+  .map(chapter => [chapter.id, chapter]));
+
+function showChapter() {
+  const hash = location.hash.slice(1);
+  const target = chapterRoutes.get(hash) ?? cover;
+  const section = target.closest("main > section");
+  document.body.classList.toggle("chapter-open", target !== cover);
+  cover.hidden = target !== cover;
+
+  for (const chapter of chapterSections) chapter.hidden = chapter !== section;
+  for (const article of chapterArticles) article.hidden = article !== target;
+  for (const overview of document.querySelectorAll("#videos, #wahlmodule")) {
+    const hideOverview = section === overview && target !== overview;
+    for (const item of overview.children) {
+      if (item.tagName !== "ARTICLE") item.hidden = hideOverview;
+    }
+  }
+
+  for (const link of chapterNav.querySelectorAll("a")) {
+    const current = link.hash === "#" + (section ?? cover).id;
+    if (current) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  }
+
+  for (const video of document.querySelectorAll("video")) {
+    if (video.closest("[hidden]") && !video.paused) video.pause();
+  }
+  for (const frame of document.querySelectorAll("iframe")) {
+    if (frame.closest("[hidden]") && frame.hasAttribute("src")) {
+      frame.dataset.chapterSrc = frame.getAttribute("src");
+      frame.removeAttribute("src");
+    } else if (!frame.closest("[hidden]") && frame.dataset.chapterSrc) {
+      frame.src = frame.dataset.chapterSrc;
+      delete frame.dataset.chapterSrc;
+    }
+  }
+
+  if (!hash || hash === "start") {
+    window.scrollTo(0, 0);
+  } else {
+    const heading = target.querySelector("h2, h3");
+    heading.tabIndex = -1;
+    heading.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }
+}
+
+window.addEventListener("hashchange", showChapter);
+showChapter();
